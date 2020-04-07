@@ -1,0 +1,20 @@
+<div>
+    <button (click)="addArrow()">Add arrow</button>
+</div>
+<div>
+    <button (click)="addArrow()">Add arrow</button>
+</div>
+<div>
+    <svg id="mysvg" width="700" height="420">
+        <svg:rect attr.x={{myStat.positionX}} 
+            attr.y={{myStat.positionY}} 
+            [attr.width]="100" 
+            [attr.height]="50"  
+            fill="green"
+            cdkDrag
+            cdkDragBoundary="svg"
+            (cdkDragEnded)="onDragEnded($event)"
+            (cdkDragMoved)="onDragMoved($event)">
+        </svg:rect>
+    </svg>
+</div>
