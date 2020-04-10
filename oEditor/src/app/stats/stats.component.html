@@ -2,19 +2,37 @@
     <button (click)="addArrow()">Add arrow</button>
 </div>
 <div>
-    <button (click)="addArrow()">Add arrow</button>
+    <button (click)="addArrowStep()">Add arrow two steps</button>
 </div>
-<div>
-    <svg id="mysvg" width="700" height="420">
-        <svg:rect attr.x={{myStat.positionX}} 
-            attr.y={{myStat.positionY}} 
-            [attr.width]="100" 
-            [attr.height]="50"  
-            fill="green"
-            cdkDrag
-            cdkDragBoundary="svg"
-            (cdkDragEnded)="onDragEnded($event)"
-            (cdkDragMoved)="onDragMoved($event)">
-        </svg:rect>
+<div >
+    <svg id="mysvg"  width="700" height="420"                >
+        <svg:g class="stat" *ngFor="let stat of myStat" cdkDrag cdkDragBoundary="svg" 
+                (CdkDragStart)="onDragStart($event)" (cdkDragEnded)="onDragEnded($event,stat)"
+                (cdkDragMoved)="onDragMoved($event,stat)"
+                
+                (click)="setArrowPoints(stat)">
+            <svg:rect
+                attr.x={{stat.positionX}} attr.y={{stat.positionY}} 
+                attr.width={{stat.width}} attr.height={{stat.height}}  
+                fill="green" >
+            </svg:rect>
+            <svg:text attr.x={{stat.centerX}} attr.y={{stat.centerY}} >{{stat.name}}</svg:text>
+            <svg:circle class="accessPoint"
+                attr.cx={{stat.accessNorthX}} attr.cy={{stat.accessNorthY}} r="4" 
+                stroke="black" stroke-width="3" fill="red">                
+            </svg:circle>
+            <svg:circle class="accessPoint"
+                attr.cx={{stat.accessSouthX}} attr.cy={{stat.accessSouthY}} r="4" 
+                stroke="black" stroke-width="3" fill="red">                
+            </svg:circle>
+            <svg:circle class="accessPoint"
+                attr.cx={{stat.accessEastX}} attr.cy={{stat.accessEastY}} r="4" 
+                stroke="black" stroke-width="3" fill="red">                
+            </svg:circle>
+            <svg:circle class="accessPoint"
+                attr.cx={{stat.accessWestX}} attr.cy={{stat.accessWestY}} r="4" 
+                stroke="black" stroke-width="3" fill="red">                
+            </svg:circle>
+        </svg:g>
     </svg>
 </div>
