@@ -16,7 +16,7 @@ export class StatsComponent implements OnInit {
 
   myStat:IStat[];
   myArrow:IArrow;
-  arrow = document.createElementNS("http://www.w3.org/2000/svg", "line");  
+  arrow = document.createElementNS("http://www.w3.org/2000/svg", "polyline");  
   newArrow = document.createElementNS("http://www.w3.org/2000/svg", "line");
   
   a1:number;
@@ -26,6 +26,8 @@ export class StatsComponent implements OnInit {
 
   arrowStartPoint = false;
   arrowEndtPoint = false;
+
+  vertical = false;
 
   constructor(private statService:StatService) { }
 
@@ -51,8 +53,15 @@ export class StatsComponent implements OnInit {
       this.fisrstStat.positionY = stat.positionY + matrix.m42;
       this.fisrstStat.centerX = stat.centerX + matrix.m41; 
       this.fisrstStat.centerY = stat.centerY + matrix.m42;
-      this.fisrstStat.accessWestX = stat.accessWestX+matrix.m41;
-      this.fisrstStat.accessWestY = stat.accessWestY+matrix.m42;    
+      
+      this.fisrstStat.accessNorthX = stat.accessNorthX + matrix.m41;
+      this.fisrstStat.accessNorthY = stat.accessNorthY + matrix.m42;      
+      this.fisrstStat.accessSouthX = stat.accessSouthX + matrix.m41;
+      this.fisrstStat.accessSouthY = stat.accessSouthY + matrix.m42;      
+      this.fisrstStat.accessEastX = stat.accessEastX + matrix.m41;
+      this.fisrstStat.accessEastY = stat.accessEastY + matrix.m42;      
+      this.fisrstStat.accessWestX = stat.accessWestX + matrix.m41;
+      this.fisrstStat.accessWestY = stat.accessWestY + matrix.m42;
       
       this.setArea(this.fisrstStat);
       this.newArrow.setAttributeNS(null,"x1", (this.myStat[0].accessWestX + matrix.m41).toString());
@@ -76,49 +85,93 @@ export class StatsComponent implements OnInit {
       this.secondStat.accessWestX = stat.accessWestX + matrix.m41;
       this.secondStat.accessWestY = stat.accessWestY + matrix.m42;
 
-      //this.setArea(this.secondStat);
-      //this.newArrow.setAttributeNS(null,"x2", (this.myStat[1].accessEastX + matrix.m41).toString());
-      //this.newArrow.setAttributeNS(null,"y2", (this.myStat[1].accessEastY +matrix.m42).toString());      
-      
-
       let myArea = this.getMyArea(this.secondStat);
       if(myArea === "North"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessSouthX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessSouthY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
-    if(myArea === "South"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessNorthX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessNorthY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
-    if(myArea === "East"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessWestX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessWestY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
-    if(myArea === "West"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessEastX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessEastY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessNorthX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessNorthY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessSouthX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessSouthY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+
+        this.vertical = true; 
+        this.addArrow(this.fisrstStat.accessNorthX,
+                      this.fisrstStat.accessNorthY,
+                      this.secondStat.accessSouthX,
+                      this.secondStat.accessSouthY
+        );
+      }
+      if(myArea === "South"){
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessSouthX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessSouthY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessNorthX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessNorthY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+
+        this.vertical = true;
+        this.addArrow(this.fisrstStat.accessSouthX,
+          this.fisrstStat.accessSouthY,
+          this.secondStat.accessNorthX,
+          this.secondStat.accessNorthY);
+      }
+      if(myArea === "East"){
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessEastX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessEastY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessWestX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessWestY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+
+        this.vertical = false;
+        this.addArrow(this.fisrstStat.accessEastX,
+          this.fisrstStat.accessEastY,
+          this.secondStat.accessWestX,
+          this.secondStat.accessWestY);
+      }
+      if(myArea === "West"){
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessWestX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessWestY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessEastX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessEastY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+
+        this.vertical = false;
+        this.addArrow(this.fisrstStat.accessWestX,
+          this.fisrstStat.accessWestY,
+          this.secondStat.accessEastX,
+          this.secondStat.accessEastY);
+      }
     }
   }
 
   onDragEnded(event:CdkDragMove,stat:IStat) {      
   }
  
-  addArrow(){
-    this.arrow.setAttributeNS(null,"x1", this.fisrstStat.accessWestX.toString());
-    this.arrow.setAttributeNS(null,"y1", this.fisrstStat.accessWestY.toString());
-    this.arrow.setAttributeNS(null,"x2",this.secondStat.accessEastX.toString());
-    this.arrow.setAttributeNS(null,"y2", this.secondStat.accessEastY.toString()); 
-    this.arrow.setAttributeNS(null,"stroke", "black");
+  addArrow(x1:number, y1:number, x2:number, y2:number){
+    let path:string="";
+    //path = "00,120 20,60 40,120 60,10";
+    if(this.vertical){
+    path = x1.toString() + "," + y1.toString() + " "
+            +x1.toString() + "," + ((y2+y1)/2).toString()+" "
+            +x2.toString() + "," + ((y2+y1)/2).toString()+" "
+            +x2.toString() + "," + y2.toString();
+    }
+    else{
+      path = x1.toString() + "," + y1.toString() + " "
+            +((x1+x2)/2).toString() + "," + y1.toString()+" "
+            +((x1+x2)/2).toString() + "," + y2.toString()+" "
+            +x2.toString() + "," + y2.toString();
+    }
 
+    this.arrow.setAttributeNS(null, 'points', path);
+    this.arrow.setAttributeNS(null, "fill", "none");
+    this.arrow.setAttributeNS(null,"stroke", "black");
     document.getElementById("mysvg").appendChild(this.arrow);
   }
 
@@ -130,33 +183,69 @@ export class StatsComponent implements OnInit {
     if(this.arrowEndtPoint && !this.arrowStartPoint){
       let myArea = this.getMyArea(this.secondStat);
       if(myArea === "North"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessSouthX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessSouthY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
-    if(myArea === "South"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessNorthX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessNorthY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
-    if(myArea === "East"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessWestX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessWestY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
-    if(myArea === "West"){
-      this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessEastX.toString());
-      this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessEastY).toString());
-      this.newArrow.setAttributeNS(null,"stroke", "black");
-      document.getElementById("mysvg").appendChild(this.newArrow);
-    }
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessNorthX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessNorthY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessSouthX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessSouthY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+        this.vertical = true; 
+        this.addArrow(this.fisrstStat.accessNorthX,
+                      this.fisrstStat.accessNorthY,
+                      this.secondStat.accessSouthX,
+                      this.secondStat.accessSouthY
+        );
+      }
+      if(myArea === "South"){
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessSouthX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessSouthY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessNorthX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessNorthY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+        
+        this.vertical = true;
+        this.addArrow(this.fisrstStat.accessSouthX,
+          this.fisrstStat.accessSouthY,
+          this.secondStat.accessNorthX,
+          this.secondStat.accessNorthY);
+      }
+      if(myArea === "East"){
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessEastX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessEastY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessWestX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessWestY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+
+        this.vertical = false;
+        this.addArrow(this.fisrstStat.accessEastX,
+          this.fisrstStat.accessEastY,
+          this.secondStat.accessWestX,
+          this.secondStat.accessWestY);
+      }
+      if(myArea === "West"){
+        this.newArrow.setAttributeNS(null,"x1", (this.fisrstStat.accessWestX).toString());
+        this.newArrow.setAttributeNS(null,"y1", (this.fisrstStat.accessWestY).toString());
+
+        this.newArrow.setAttributeNS(null,"x2", this.secondStat.accessEastX.toString());
+        this.newArrow.setAttributeNS(null,"y2", (this.secondStat.accessEastY).toString());
+        this.newArrow.setAttributeNS(null,"stroke", "black");
+        //document.getElementById("mysvg").appendChild(this.newArrow);
+
+        this.vertical = false;
+        this.addArrow(this.fisrstStat.accessWestX,
+          this.fisrstStat.accessWestY,
+          this.secondStat.accessEastX,
+          this.secondStat.accessEastY);
+      }
       this.arrowEndtPoint = false;
       this.arrowStartPoint = false;
     
-  }
+    }
     if(this.arrowStartPoint){
       this.newArrow.setAttributeNS(null,"x1", this.fisrstStat.accessWestX.toString());
       this.newArrow.setAttributeNS(null,"y1", this.fisrstStat.accessWestY.toString());

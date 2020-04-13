@@ -8,12 +8,14 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { DrawnComponent } from './drawn/drawn.component';
 import { StatsComponent } from './stats/stats.component';
+import { ToolsComponent } from './tools/tools.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DrawnComponent,
     StatsComponent,
+    ToolsComponent,
 
   ],
   imports: [

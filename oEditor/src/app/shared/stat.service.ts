@@ -57,13 +57,21 @@ export class StatService {
         "startX":150,
         "startY":150,
         "endX":250,
-        "endY":250
+        "endY":250,
+        "middleStartX":200,
+        "middleStartY":150,
+        "middleEndX":200,
+        "middleEndY":250
       },
       {
         "startX":350,
         "startY":50,
         "endX":250,
-        "endY":250
+        "endY":250,
+        "middleStartX":200,
+        "middleStartY":150,
+        "middleEndX":200,
+        "middleEndY":250
       }
     ];
   }

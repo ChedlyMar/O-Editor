@@ -3,4 +3,10 @@ export class IArrow{
     startY:number
     endX:number;
     endY:number;
+    middleStartX?:number;
+    middleStartY?:number;
+    middleEndX?:number;
+    middleEndY?:number;
+    
+
 } 
