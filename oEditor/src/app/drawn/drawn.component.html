@@ -9,8 +9,7 @@
     </g>  
     <g *ngFor="let arrow of myArrows" 
         [arrow]="arrow" app-arrow
-        [translationX]="arrow.translationX"
-        [translationY]="arrow.translationY">
+        [translation]="arrow.startTranslationX + arrow.startTranslationY + arrow.endTranslationX + arrow.endTranslationY">
     </g>  
     
 </svg>

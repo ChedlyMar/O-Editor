@@ -9,30 +9,45 @@ import { IArrow } from 'src/app/shared/arrow';
 export class ArrowComponent implements OnInit {
 
 @Input() arrow:IArrow;
-@Input() translationX:number=0;
-@Input() translationY:number=0;
+@Input() translation:number=0;
+//@Input() translationY:number=0;
 
 path:string;
 
   ngOnInit(): void {
   console.log(this.arrow);
-  this.path = this.arrow.startX.toString() + "," + this.arrow.startY.toString() + " "
-            +this.arrow.middleStartX.toString() + "," + this.arrow.middleStartY.toString()+" "
-            +this.arrow.middleEndX.toString() + "," + this.arrow.middleEndY.toString()+" "
-            +this.arrow.endX.toString() + "," + this.arrow.endY.toString();
+  if(this.arrow.traslationPoint === "vertical"){
+    this.path = (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
+            + (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + ((this.arrow.startY + this.arrow.startTranslationY + this.arrow.endY + this.arrow.endTranslationY)/2).toString() + " "
+            + (this.arrow.endX + this.arrow.endTranslationX).toString() + "," + ((this.arrow.startY + this.arrow.startTranslationY + this.arrow.endY + this.arrow.endTranslationY)/2).toString() + " "
+            + (this.arrow.endX + this.arrow.endTranslationX).toString() + "," + (this.arrow.endY + this.arrow.endTranslationY).toString();
+  }
+  if(this.arrow.traslationPoint ==="horizontal"){
+    this.path = (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
+            + ((this.arrow.startX + this.arrow.startTranslationX + this.arrow.endX + this.arrow.endTranslationX)/2).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
+            + ((this.arrow.startX + this.arrow.startTranslationX + this.arrow.endX + this.arrow.endTranslationX)/2).toString() + "," + (this.arrow.endY + this.arrow.endTranslationY).toString() + " "
+            + (this.arrow.endX + this.arrow.endTranslationX).toString() + "," + (this.arrow.endY + this.arrow.endTranslationY).toString();
   }
 
+}
+
+  
   
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
-    if(this.arrow.traslationPoint === "start"){
-      this.path = (this.arrow.startX + this.arrow.translationX).toString() + "," + (this.arrow.startY + this.arrow.translationY).toString() + " "
-                + (this.arrow.middleStartX + this.arrow.translationX/2).toString() + "," + (this.arrow.middleStartY+ this.arrow.translationY).toString()+" "
-                + (this.arrow.middleEndX + this.arrow.translationX/2).toString() + "," + this.arrow.middleEndY.toString()+" "
-                + this.arrow.endX.toString() + "," + this.arrow.endY.toString();
-      }
+    if(this.arrow.traslationPoint === "vertical"){
+      this.path = (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
+              + (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + ((this.arrow.startY + this.arrow.startTranslationY + this.arrow.endY + this.arrow.endTranslationY)/2).toString() + " "
+              + (this.arrow.endX + this.arrow.endTranslationX).toString() + "," + ((this.arrow.startY + this.arrow.startTranslationY + this.arrow.endY + this.arrow.endTranslationY)/2).toString() + " "
+              + (this.arrow.endX + this.arrow.endTranslationX).toString() + "," + (this.arrow.endY + this.arrow.endTranslationY).toString();
+    }
+    if(this.arrow.traslationPoint ==="horizontal"){
+      this.path = (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
+              + ((this.arrow.startX + this.arrow.startTranslationX + this.arrow.endX + this.arrow.endTranslationX)/2).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
+              + ((this.arrow.startX + this.arrow.startTranslationX + this.arrow.endX + this.arrow.endTranslationX)/2).toString() + "," + (this.arrow.endY + this.arrow.endTranslationY).toString() + " "
+              + (this.arrow.endX + this.arrow.endTranslationX).toString() + "," + (this.arrow.endY + this.arrow.endTranslationY).toString();
+    }
 
-    
     
   }
    

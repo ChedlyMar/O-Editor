@@ -8,9 +8,10 @@ export class IArrow{
     middleEndX?:number;
     middleEndY?:number;
 
-    translationX?:number;
-    translationY?:number;
-    
+    startTranslationX?:number;
+    startTranslationY?:number;
+    endTranslationX?:number;
+    endTranslationY?:number;
 
     traslationPoint?:string;
     
