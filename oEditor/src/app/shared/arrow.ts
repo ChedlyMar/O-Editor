@@ -7,6 +7,12 @@ export class IArrow{
     middleStartY?:number;
     middleEndX?:number;
     middleEndY?:number;
+
+    translationX?:number;
+    translationY?:number;
+    
+
+    traslationPoint?:string;
     
 
 } 

@@ -1,0 +1,26 @@
+<svg:rect   class="rect" 
+            attr.x={{state.positionX}} attr.y={{state.positionY}} 
+            attr.width={{state.width}} attr.height={{state.height}}  
+            style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+
+<svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} >{{state.name}}</svg:text>
+<svg:circle class="accessPoint"
+            attr.cx={{state.accessNorthX}} attr.cy={{state.accessNorthY}} 
+            r="4" 
+            stroke="red" stroke-width="3" fill="red">                
+</svg:circle>
+<svg:circle class="accessPoint"
+            attr.cx={{state.accessSouthX}} attr.cy={{state.accessSouthY}} 
+            r="4" 
+            stroke="black" stroke-width="3" fill="red">                
+</svg:circle>
+<svg:circle class="accessPoint"
+            attr.cx={{state.accessEastX}} attr.cy={{state.accessEastY}} 
+            r="4" 
+            stroke="black" stroke-width="3" fill="red">                
+</svg:circle>
+<svg:circle class="accessPoint"
+            attr.cx={{state.accessWestX}} attr.cy={{state.accessWestY}} 
+            r="4" 
+            stroke="black" stroke-width="3" fill="red">                
+</svg:circle>

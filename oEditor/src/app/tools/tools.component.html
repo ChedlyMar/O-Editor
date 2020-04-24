@@ -1,26 +1,11 @@
-<div class="panel" >
-  <div class="rect" (click)="selectShape(Rectangle)">
-    Stat
-  </div>
-  <div class="arrow" (click)="selectShape(Arrow)">
-    Arrow
-  </div>
+<div class="tools">
+    <div class="panel" >
+        <div class="rect" (click)="selectRect($event)">
+          Stat
+        </div>
+        <div class="arrow" (click)="selectArrow($event)">
+          Arrow
+        </div>
+    </div>
 </div>
-
-<!--
-  <svg class="tools-wrapper" width="90"  >
-  <svg (click)="addRec()">
-    <svg:rect class="tool-rect " x="2" y="5" rx="2" ry="2" (click)="addRect()"/>
-  </svg>
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5"
-        markerWidth="6" markerHeight="6"
-        orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" />
-    </marker>
-  </defs>
-  
-  <svg:rect class="tool-rect" x="2" y="70" rx="2" ry="2" />
-  <svg:line class="tool-arrow" x1="2" y1="120" x2="75" y2="73" marker-end="url(#arrow)" />  
-</svg>
--->
+<div>

@@ -1,8 +1,23 @@
-<svg id="mysvg2" style="border:1px solid black; ">
-       
+<svg  style="border:1px solid black;"
+     >    
+    <g *ngFor="let state of myStates"
+        [state]="state"
+        app-rectangle cdkDrag 
+        (mousedown)="onMouseDown(state)"
+        (cdkDragMoved)="onDragMoved($event,state)"
+        (click)="onStateSelected($event,state)">        
+    </g>  
+    <g *ngFor="let arrow of myArrows" 
+        [arrow]="arrow" app-arrow
+        [translationX]="arrow.translationX"
+        [translationY]="arrow.translationY">
+    </g>  
+    
 </svg>
 
-
+<app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
+           (addNewArrowEvent)="onNewArrowEventRecived($event)">
+</app-tools>
 
 
 <!--

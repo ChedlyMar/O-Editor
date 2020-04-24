@@ -1,4 +1,4 @@
-export class IStat {
+export class IState {
     name:string;
     positionX:number;
     positionY:number;
@@ -19,5 +19,8 @@ export class IStat {
 
     centerX?:number;
     centerY?:number;
+
+    translateX?:number;
+    translateY?:number;
 
 }

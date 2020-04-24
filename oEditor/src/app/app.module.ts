@@ -9,6 +9,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DrawnComponent } from './drawn/drawn.component';
 import { StatsComponent } from './stats/stats.component';
 import { ToolsComponent } from './tools/tools.component';
+import { ArrowComponent } from './shapes/arrow/arrow.component';
+import { RectangleComponent } from './shapes/rectangle/rectangle.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { ToolsComponent } from './tools/tools.component';
     DrawnComponent,
     StatsComponent,
     ToolsComponent,
+    ArrowComponent,
+    RectangleComponent,
 
   ],
   imports: [
@@ -26,6 +30,6 @@ import { ToolsComponent } from './tools/tools.component';
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

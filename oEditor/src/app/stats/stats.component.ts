@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IStat } from '../shared/stat';
-import { StatService } from '../shared/stat.service';
+import { IState } from '../shared/stat';
+import { StateService } from '../shared/stat.service';
 import { CdkDragMove, CdkDragStart } from '@angular/cdk/drag-drop';
 import { IArrow } from '../shared/arrow';
 
@@ -11,10 +11,10 @@ import { IArrow } from '../shared/arrow';
 })
 export class StatsComponent implements OnInit {
 
-  fisrstStat:IStat;
-  secondStat:IStat;
+  fisrstStat:IState;
+  secondStat:IState;
 
-  myStat:IStat[];
+  myStat:IState[];
   myArrow:IArrow;
   arrow = document.createElementNS("http://www.w3.org/2000/svg", "polyline");  
   newArrow = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -29,39 +29,39 @@ export class StatsComponent implements OnInit {
 
   vertical = false;
 
-  constructor(private statService:StatService) { }
+  constructor(private statService:StateService) { }
 
   ngOnInit(): void {    
-    this.myStat = this.statService.getStat();
+    this.myStat = this.statService.getStates();
     this.myArrow=this.statService.getArrow()[0];
 
-    this.fisrstStat = this.statService.getStat()[0];
-    this.secondStat = this.statService.getStat()[1];
+    this.fisrstStat = this.statService.getStates()[0];
+    this.secondStat = this.statService.getStates()[1];
   }
   
   onDragStart(event:CdkDragMove){
   }
 
-  onDragMoved(event: CdkDragMove,stat:IStat) {  
+  onDragMoved(event: CdkDragMove,state:IState) {  
     let element = event.source.getRootElement();
     let style = window.getComputedStyle(element);
     let matrix = new WebKitCSSMatrix(style.webkitTransform);
     //translateX: matrix.m41
     //translateY: matrix.m42
-    if(stat.name===this.fisrstStat.name){
-      this.fisrstStat.positionX = stat.positionX + matrix.m41;
-      this.fisrstStat.positionY = stat.positionY + matrix.m42;
-      this.fisrstStat.centerX = stat.centerX + matrix.m41; 
-      this.fisrstStat.centerY = stat.centerY + matrix.m42;
+    if(state.name===this.fisrstStat.name){
+      this.fisrstStat.positionX = state.positionX + matrix.m41;
+      this.fisrstStat.positionY = state.positionY + matrix.m42;
+      this.fisrstStat.centerX = state.centerX + matrix.m41; 
+      this.fisrstStat.centerY = state.centerY + matrix.m42;
       
-      this.fisrstStat.accessNorthX = stat.accessNorthX + matrix.m41;
-      this.fisrstStat.accessNorthY = stat.accessNorthY + matrix.m42;      
-      this.fisrstStat.accessSouthX = stat.accessSouthX + matrix.m41;
-      this.fisrstStat.accessSouthY = stat.accessSouthY + matrix.m42;      
-      this.fisrstStat.accessEastX = stat.accessEastX + matrix.m41;
-      this.fisrstStat.accessEastY = stat.accessEastY + matrix.m42;      
-      this.fisrstStat.accessWestX = stat.accessWestX + matrix.m41;
-      this.fisrstStat.accessWestY = stat.accessWestY + matrix.m42;
+      this.fisrstStat.accessNorthX = state.accessNorthX + matrix.m41;
+      this.fisrstStat.accessNorthY = state.accessNorthY + matrix.m42;      
+      this.fisrstStat.accessSouthX = state.accessSouthX + matrix.m41;
+      this.fisrstStat.accessSouthY = state.accessSouthY + matrix.m42;      
+      this.fisrstStat.accessEastX = state.accessEastX + matrix.m41;
+      this.fisrstStat.accessEastY = state.accessEastY + matrix.m42;      
+      this.fisrstStat.accessWestX = state.accessWestX + matrix.m41;
+      this.fisrstStat.accessWestY = state.accessWestY + matrix.m42;
       
       this.setArea(this.fisrstStat);
       this.newArrow.setAttributeNS(null,"x1", (this.myStat[0].accessWestX + matrix.m41).toString());
@@ -70,20 +70,20 @@ export class StatsComponent implements OnInit {
       this.setArrowPoints(this.fisrstStat);
     }
     else{
-      this.secondStat.positionX = stat.positionX + matrix.m41;
-      this.secondStat.positionY = stat.positionY + matrix.m42;
+      this.secondStat.positionX = state.positionX + matrix.m41;
+      this.secondStat.positionY = state.positionY + matrix.m42;
 
-      this.secondStat.centerX = stat.centerX + matrix.m41; 
-      this.secondStat.centerY = stat.centerY + matrix.m42;
+      this.secondStat.centerX = state.centerX + matrix.m41; 
+      this.secondStat.centerY = state.centerY + matrix.m42;
       
-      this.secondStat.accessNorthX = stat.accessNorthX + matrix.m41;
-      this.secondStat.accessNorthY = stat.accessNorthY + matrix.m42;      
-      this.secondStat.accessSouthX = stat.accessSouthX + matrix.m41;
-      this.secondStat.accessSouthY = stat.accessSouthY + matrix.m42;      
-      this.secondStat.accessEastX = stat.accessEastX + matrix.m41;
-      this.secondStat.accessEastY = stat.accessEastY + matrix.m42;      
-      this.secondStat.accessWestX = stat.accessWestX + matrix.m41;
-      this.secondStat.accessWestY = stat.accessWestY + matrix.m42;
+      this.secondStat.accessNorthX = state.accessNorthX + matrix.m41;
+      this.secondStat.accessNorthY = state.accessNorthY + matrix.m42;      
+      this.secondStat.accessSouthX = state.accessSouthX + matrix.m41;
+      this.secondStat.accessSouthY = state.accessSouthY + matrix.m42;      
+      this.secondStat.accessEastX = state.accessEastX + matrix.m41;
+      this.secondStat.accessEastY = state.accessEastY + matrix.m42;      
+      this.secondStat.accessWestX = state.accessWestX + matrix.m41;
+      this.secondStat.accessWestY = state.accessWestY + matrix.m42;
 
       let myArea = this.getMyArea(this.secondStat);
       if(myArea === "North"){
@@ -150,7 +150,7 @@ export class StatsComponent implements OnInit {
     }
   }
 
-  onDragEnded(event:CdkDragMove,stat:IStat) {      
+  onDragEnded(event:CdkDragMove,state:IState) {      
   }
  
   addArrow(x1:number, y1:number, x2:number, y2:number){
@@ -179,7 +179,7 @@ export class StatsComponent implements OnInit {
     this.arrowStartPoint = true;
   }
 
-  setArrowPoints(stat:IStat){    
+  setArrowPoints(state:IState){    
     if(this.arrowEndtPoint && !this.arrowStartPoint){
       let myArea = this.getMyArea(this.secondStat);
       if(myArea === "North"){
@@ -255,7 +255,7 @@ export class StatsComponent implements OnInit {
     }
   }  
     
-  setArea(stat:IStat){
+  setArea(stat:IState){
     if(stat.name=== this.fisrstStat.name){
       this.a1 = (this.fisrstStat.positionY - this.fisrstStat.centerY)/(this.fisrstStat.positionX-this.fisrstStat.centerX);
       this.b1 = this.fisrstStat.positionY - this.a1 * this.fisrstStat.positionX;
@@ -273,7 +273,7 @@ export class StatsComponent implements OnInit {
     //            if f(x) > y => (x,y) is un the inferior area  
   }
 
-  getMyArea(stat:IStat): string{ 
+  getMyArea(stat:IState): string{ 
     if((this.a1 * stat.centerX + this.b1) > stat.centerY){
       if(this.a2 * stat.centerX + this.b2 > stat.centerY){
         console.log("I am in the North Area");

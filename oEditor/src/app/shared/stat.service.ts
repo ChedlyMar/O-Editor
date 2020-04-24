@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 
-import { IStat } from './stat';
+import { IState } from './stat';
 import { IArrow } from './arrow';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StatService {
+export class StateService {
 
 
 
-  getStat(): IStat[] {
+  getStates(): IState[] {
     return [
       {
         "name":"First Stat",
@@ -27,7 +27,9 @@ export class StatService {
         "accessWestX":250,
         "accessWestY":195,
         "centerX":300,
-        "centerY":195
+        "centerY":195,
+        "translateX":0,
+        "translateY":0
         
       },
       {
@@ -45,41 +47,24 @@ export class StatService {
         "accessWestX":25,
         "accessWestY":365,
         "centerX":75,
-        "centerY":365
+        "centerY":365,
+        "translateX":0,
+        "translateY":0
         
       }
     ];
   }
 
   getArrow(): IArrow[]{
-    return[
-      {
-        "startX":150,
-        "startY":150,
-        "endX":250,
-        "endY":250,
-        "middleStartX":200,
-        "middleStartY":150,
-        "middleEndX":200,
-        "middleEndY":250
-      },
-      {
-        "startX":350,
-        "startY":50,
-        "endX":250,
-        "endY":250,
-        "middleStartX":200,
-        "middleStartY":150,
-        "middleEndX":200,
-        "middleEndY":250
-      }
+    return[    
+      
     ];
   }
 
  
 
-  getSingleStat(): IStat {
-    let myStat :IStat ={
+  getSingleStat(): IState {
+    let myStat :IState ={
       "name":"First Stat",
       "positionX":100,
       "positionY":150,
