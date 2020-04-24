@@ -42,20 +42,20 @@ export class DrawnComponent implements OnInit {
     
     let newState:IState = {
       "name":"new state",
-      "positionX":e.clientX,
-      "positionY":e.clientY,
+      "positionX":e.clientX - 50,
+      "positionY":e.clientY - 25,
       "width":100,
       "height":50,
-      "accessNorthX":300,
-      "accessNorthY":170,
-      "accessSouthX":300,
-      "accessSouthY":220,
-      "accessEastX":350,
-      "accessEastY":195,
-      "accessWestX":250,
-      "accessWestY":195,
-      "centerX":300,
-      "centerY":195,
+      "accessNorthX":e.clientX,
+      "accessNorthY":e.clientY - 25,
+      "accessSouthX":e.clientX,
+      "accessSouthY":e.clientY + 25,
+      "accessEastX":e.clientX + 50,
+      "accessEastY":e.clientY,
+      "accessWestX":e.clientX - 50,
+      "accessWestY":e.clientY,
+      "centerX":e.clientX,
+      "centerY":e.clientX,
       "translateX":0,
       "translateY":0
     };
@@ -70,7 +70,7 @@ export class DrawnComponent implements OnInit {
     
   }
 
-  onDragMoved(event,state){ 
+  onDragMoved(event, state){ 
     let element = event.source.getRootElement();
     let style = window.getComputedStyle(element);
     let matrix = new WebKitCSSMatrix(style.webkitTransform);
@@ -79,26 +79,146 @@ export class DrawnComponent implements OnInit {
     
     if(this.myArrows.length){
       this.myArrows.forEach(arrow => {
-        if(arrow.startX === state.accessNorthX && arrow.startY === state.accessNorthY){
+        if(arrow.startX  === state.accessNorthX  && arrow.startY === state.accessNorthY){
           arrow.traslationPoint = "vertical";  
           arrow.startTranslationX = matrix.m41;
           arrow.startTranslationY = matrix.m42;
+
+          this.myStates.forEach(secondState => {
+            if(secondState.accessSouthX === arrow.endX && secondState.accessSouthY === arrow.endY){
+              this.setArea(state);
+              if(this.getMyArea(secondState) === "East"){
+                arrow.startX = state.accessEastX ;
+                arrow.startY = state.accessEastY;
+                arrow.endX = secondState.accessWestX;
+                arrow.endY = secondState.accessWestY;
+                arrow.traslationPoint = "horizontal"; 
+              }
+              if(this.getMyArea(secondState) === "West"){
+                arrow.startX = state.accessWestX ;
+                arrow.startY = state.accessWestY;
+                arrow.endX = secondState.accessEastX;
+                arrow.endY = secondState.accessEastY;
+                arrow.traslationPoint = "horizontal"; 
+              }
+              if(this.getMyArea(secondState) === "South"){
+                arrow.startX = state.accessSouthX ;
+                arrow.startY = state.accessSouthY;
+                arrow.endX = secondState.accessNorthX;
+                arrow.endY = secondState.accessNorthY;
+                arrow.traslationPoint = "vertical"; 
+              }
+            }
+          })
         } 
         if(arrow.startX === state.accessSouthX && arrow.startY === state.accessSouthY){
           arrow.traslationPoint = "vertical";
           arrow.startTranslationX = matrix.m41;
           arrow.startTranslationY = matrix.m42;  
+          this.myStates.forEach(secondState => {
+            if(secondState.accessNorthX === arrow.endX && secondState.accessNorthY === arrow.endY){
+              this.setArea(state);
+              if(this.getMyArea(secondState) === "East"){
+                arrow.startX = state.accessEastX ;
+                arrow.startY = state.accessEastY;
+                arrow.endX = secondState.accessWestX;
+                arrow.endY = secondState.accessWestY;
+                arrow.traslationPoint = "horizontal"; 
+              }
+              if(this.getMyArea(secondState) === "West"){
+                arrow.startX = state.accessWestX ;
+                arrow.startY = state.accessWestY;
+                arrow.endX = secondState.accessEastX;
+                arrow.endY = secondState.accessEastY;
+                arrow.traslationPoint = "horizontal"; 
+              }
+              if(this.getMyArea(secondState) === "North"){
+                arrow.startX = state.accessNorthX ;
+                arrow.startY = state.accessNorthY;
+                arrow.endX = secondState.accessSouthX;
+                arrow.endY = secondState.accessSouthY;
+                arrow.traslationPoint = "vertical"; 
+              }
+            }
+          })
         }
         if(arrow.startX === state.accessEastX && arrow.startY === state.accessEastY){
           arrow.traslationPoint = "horizontal";  
           arrow.startTranslationX = matrix.m41;
           arrow.startTranslationY = matrix.m42;  
+
+          this.myStates.forEach(secondState => {
+            if(secondState.accessWestX === arrow.endX && secondState.accessWestY === arrow.endY){
+              this.setArea(state);
+              if(this.getMyArea(secondState) === "South"){
+                arrow.startX = state.accessSouhX ;
+                arrow.startY = state.accessSouthY;
+                arrow.endX = secondState.accessWestX;
+                arrow.endY = secondState.accessWestY;
+                arrow.traslationPoint = "vertical"; 
+              }
+              if(this.getMyArea(secondState) === "West"){
+                arrow.startX = state.accessWestX ;
+                arrow.startY = state.accessWestY;
+                arrow.endX = secondState.accessEastX;
+                arrow.endY = secondState.accessEastY;
+                arrow.traslationPoint = "horizontal"; 
+              }
+              if(this.getMyArea(secondState) === "North"){
+                arrow.startX = state.accessNorthX ;
+                arrow.startY = state.accessNorthY;
+                arrow.endX = secondState.accessSouthX;
+                arrow.endY = secondState.accessSouthY;
+                arrow.traslationPoint = "vertical"; 
+              }
+            }
+          })
         }
+      
+    
         if(arrow.startX === state.accessWestX && arrow.startY === state.accessWestY){
           arrow.traslationPoint = "horizontal";  
           arrow.startTranslationX = matrix.m41;
           arrow.startTranslationY = matrix.m42;  
+
+          this.myStates.forEach(secondState => {
+            if(secondState.accessWestX === arrow.endX && secondState.accessWestY === arrow.endY){
+              this.setArea(state);
+              if(this.getMyArea(secondState) === "South"){
+                arrow.startX = state.accessSouhX ;
+                arrow.startY = state.accessSouthY;
+                arrow.endX = secondState.accessWestX;
+                arrow.endY = secondState.accessWestY;
+                arrow.traslationPoint = "vertical"; 
+              }
+              if(this.getMyArea(secondState) === "East"){
+                arrow.startX = state.accessEastX ;
+                arrow.startY = state.accessEastY;
+                arrow.endX = secondState.accessWestX;
+                arrow.endY = secondState.accessWestY;
+                arrow.traslationPoint = "horizontal"; 
+              }
+              if(this.getMyArea(secondState) === "North"){
+                arrow.startX = state.accessNorthX ;
+                arrow.startY = state.accessNorthY;
+                arrow.endX = secondState.accessSouthX;
+                arrow.endY = secondState.accessSouthY;
+                arrow.traslationPoint = "vertical"; 
+              }
+            }
+          })
         }
+
+
+
+
+
+
+
+
+
+
+
         if(arrow.endX === state.accessNorthX && arrow.endY === state.accessNorthY){
           arrow.traslationPoint = "vertical";  
           arrow.endTranslationX = matrix.m41;
@@ -143,10 +263,6 @@ export class DrawnComponent implements OnInit {
               "startY":this.StartState.accessNorthY,
               "endX":this.EndState.accessSouthX,
               "endY":this.EndState.accessSouthY,
-              //"middleStartX":this.StartState.accessNorthX + this.StartState.translateX,
-              //"middleStartY":(this.StartState.accessNorthY + this.StartState.translateY + this.EndState.accessSouthY + this.EndState.translateY)/2,
-              //"middleEndX":this.EndState.accessSouthX + this.EndState.translateX,
-              //"middleEndY":(this.StartState.accessNorthY + this.StartState.translateY + this.EndState.accessSouthY + this.EndState.translateY)/2,
               "startTranslationX": this.StartState.translateX,
               "startTranslationY":this.StartState.translateY,
               "endTranslationX":this.EndState.translateX,
@@ -161,10 +277,6 @@ export class DrawnComponent implements OnInit {
                 "startY":this.StartState.accessSouthY,
                 "endX":this.EndState.accessNorthX,
                 "endY":this.EndState.accessNorthY,
-                //"middleStartX":this.StartState.accessSouthX + this.StartState.translateX,
-                //"middleStartY":(this.StartState.accessSouthY + this.StartState.translateY + this.EndState.accessNorthY + this.EndState.translateY)/2,
-                //"middleEndX":this.EndState.accessNorthX + this.EndState.translateX,
-                //"middleEndY":(this.StartState.accessSouthY + this.StartState.translateY + this.EndState.accessNorthY + this.EndState.translateY)/2,
                 "startTranslationX": this.StartState.translateX,
                 "startTranslationY":this.StartState.translateY,
                 "endTranslationX":this.EndState.translateX,
@@ -179,10 +291,6 @@ export class DrawnComponent implements OnInit {
                   "startY":this.StartState.accessEastY ,
                   "endX":this.EndState.accessWestX,
                   "endY":this.EndState.accessWestY,
-                  //"middleStartX":(this.StartState.accessEastX + this.StartState.translateX + this.EndState.accessWestX + this.EndState.translateX)/2,
-                  //"middleStartY":this.StartState.accessEastY + this.StartState.translateY,
-                  //"middleEndX":(this.StartState.accessEastX + this.StartState.translateX + this.EndState.accessWestX + this.EndState.translateX)/2,
-                  //"middleEndY":this.EndState.accessWestY + this.EndState.translateY,
                   "startTranslationX": this.StartState.translateX,
                   "startTranslationY":this.StartState.translateY,
                   "endTranslationX":this.EndState.translateX,
@@ -197,10 +305,6 @@ export class DrawnComponent implements OnInit {
                     "startY":this.StartState.accessWestY,
                     "endX":this.EndState.accessEastX,
                     "endY":this.EndState.accessEastY,
-                    //"middleStartX":(this.StartState.accessWestX + this.StartState.translateX + this.EndState.accessEastX + this.EndState.translateX)/2,
-                    //"middleStartY":this.StartState.accessWestY + this.StartState.translateY,
-                    //"middleEndX":(this.StartState.accessWestX + this.StartState.translateX + this.EndState.accessEastX + this.EndState.translateX)/2,
-                    //"middleEndY":this.EndState.accessEastY + this.EndState.translateY,
                     "startTranslationX": this.StartState.translateX,
                     "startTranslationY":this.StartState.translateY,
                     "endTranslationX":this.EndState.translateX,
