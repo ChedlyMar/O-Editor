@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { RectangleComponent } from '../shapes/rectangle/rectangle.component';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { IState } from '../shared/stat';
 
 
 @Component({
@@ -9,8 +9,10 @@ import { RectangleComponent } from '../shapes/rectangle/rectangle.component';
 })
 export class ToolsComponent implements OnInit {
 
-  @Output() addNewStateEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
+  @Output() addNewStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
+  myState:boolean = false;
+  stateParm:IState=new IState;
 
   constructor() { }
 
@@ -19,11 +21,34 @@ export class ToolsComponent implements OnInit {
   } 
 
   selectRect(event:DragEvent){
-    this.addNewStateEvent.emit(event);
+    this.myState = true;    
+    
+    document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
+    document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
+    document.getElementById("state").style.display = "block";
+    //this.addNewStateEvent.emit(event);
+  }
+
+  followCursor(event:MouseEvent){    
+    if(this.myState){
+      document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
+      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";  
+      
+    }
+  }
+ 
+  stopFollowCursor(event){
+    this.myState = false;
+    this.stateParm.positionX = 50;
+    this.stateParm.positionY = event.clientY;
+  }
+
+  createState(){    
+    this.stateParm.name = document.getElementById("state").innerText;
+    this.addNewStateEvent.emit(this.stateParm)
   }
 
   selectArrow(event:DragEvent){
     this.addNewArrowEvent.emit(event);
   }
-
 }
