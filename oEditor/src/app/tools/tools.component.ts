@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { IState } from '../shared/stat';
 
 
@@ -11,6 +11,9 @@ export class ToolsComponent implements OnInit {
 
   @Output() addNewStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
+  
+  @Input() stateNewName:IState;
+
   myState:boolean = false;
   stateParm:IState = new IState;
 
@@ -50,5 +53,12 @@ export class ToolsComponent implements OnInit {
 
   selectArrow(event:DragEvent){
     this.addNewArrowEvent.emit(event);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(this.stateNewName);
+    document.getElementById("state").style.display = "block"; 
+    document.getElementById("state").style.left = this.stateNewName.positionX.toString() + "px";
+    document.getElementById("state").style.top = this.stateNewName.positionY.toString() + "px";
   }
 }

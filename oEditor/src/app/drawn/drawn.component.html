@@ -6,8 +6,9 @@
         [translation]="state.translateX"
         
 
-        app-rectangle cdkDrag
+        app-rectangle cdkDrag 
         (mousedown)="onMouseDown(state)"
+        (dblclick)="updateStateName(state)"
         
         (cdkDragMoved)="onDragMoved($event,state)"
         (click)="onStateSelected($event,state)">        
@@ -19,7 +20,9 @@
 </svg>
 
 <app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
-           (addNewArrowEvent)="onNewArrowEventRecived($event)">
+           (addNewArrowEvent)="onNewArrowEventRecived($event)"
+           [stateNewName]="stateNewName"
+           >
 </app-tools>
 
 

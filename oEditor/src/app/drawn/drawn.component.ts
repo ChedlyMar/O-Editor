@@ -20,6 +20,8 @@ export class DrawnComponent implements OnInit {
   myArrows : IArrow[];
   newArrow = false;
 
+  stateNewName:IState;
+
   drawArrow = false;
   startArrow = false;
   endArrow = false;
@@ -70,7 +72,12 @@ export class DrawnComponent implements OnInit {
   }
 
   onMouseDown(state:IState){
-    this.finalPosition = true;    
+    this.finalPosition = true;
+  }
+
+  updateStateName(state:IState){
+    this.stateNewName = state;
+
   }
 
   onDragMoved(event, state){ 
