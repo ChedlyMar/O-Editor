@@ -2,16 +2,20 @@
      >    
     <g *ngFor="let state of myStates"
         [state]="state"
-        app-rectangle cdkDrag 
+
+        [translation]="state.translateX"
+        
+
+        app-rectangle cdkDrag
         (mousedown)="onMouseDown(state)"
+        
         (cdkDragMoved)="onDragMoved($event,state)"
         (click)="onStateSelected($event,state)">        
     </g>  
     <g *ngFor="let arrow of myArrows" 
         [arrow]="arrow" app-arrow
         [translation]="arrow.startTranslationX + arrow.startTranslationY + arrow.endTranslationX + arrow.endTranslationY">
-    </g>  
-    
+    </g>      
 </svg>
 
 <app-tools (addNewStateEvent)="onNewStateEventRecived($event)"

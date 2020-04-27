@@ -12,7 +12,7 @@ export class ToolsComponent implements OnInit {
   @Output() addNewStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
   myState:boolean = false;
-  stateParm:IState=new IState;
+  stateParm:IState = new IState;
 
   constructor() { }
 
@@ -21,12 +21,10 @@ export class ToolsComponent implements OnInit {
   } 
 
   selectRect(event:DragEvent){
-    this.myState = true;    
-    
+    this.myState = true;        
     document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
     document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
-    document.getElementById("state").style.display = "block";
-    //this.addNewStateEvent.emit(event);
+    document.getElementById("state").style.display = "block";    
   }
 
   followCursor(event:MouseEvent){    
@@ -39,13 +37,15 @@ export class ToolsComponent implements OnInit {
  
   stopFollowCursor(event){
     this.myState = false;
-    this.stateParm.positionX = 50;
+    this.stateParm.positionX = event.clientX;
     this.stateParm.positionY = event.clientY;
   }
 
   createState(){    
     this.stateParm.name = document.getElementById("state").innerText;
-    this.addNewStateEvent.emit(this.stateParm)
+    this.addNewStateEvent.emit(this.stateParm);        
+    document.getElementById("state").style.display="none";
+    document.getElementById("stateName").innerText = "";
   }
 
   selectArrow(event:DragEvent){

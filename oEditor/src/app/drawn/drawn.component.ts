@@ -29,6 +29,8 @@ export class DrawnComponent implements OnInit {
   a2:number;
   b2:number;
 
+  finalPosition:boolean = true;
+
   linkedArrow:IArrow[] = [];
   
   constructor(private stateService:StateService) { }
@@ -38,36 +40,37 @@ export class DrawnComponent implements OnInit {
     this.myArrows = this.stateService.getArrow();
   }
   
-  onNewStateEventRecived(e){   
+  onNewStateEventRecived(stateParam:IState){   
     
     let newState:IState = {
-      "name":"new state",
-      "positionX":e.clientX - 50,
-      "positionY":e.clientY - 25,
+      "name":stateParam.name,
+      "positionX":stateParam.positionX - 50,
+      "positionY":stateParam.positionY - 25,
       "width":100,
       "height":50,
-      "accessNorthX":e.clientX,
-      "accessNorthY":e.clientY - 25,
-      "accessSouthX":e.clientX,
-      "accessSouthY":e.clientY + 25,
-      "accessEastX":e.clientX + 50,
-      "accessEastY":e.clientY,
-      "accessWestX":e.clientX - 50,
-      "accessWestY":e.clientY,
-      "centerX":e.clientX,
-      "centerY":e.clientX,
+      "accessNorthX":stateParam.positionX,
+      "accessNorthY":stateParam.positionY - 25,
+      "accessSouthX":stateParam.positionX,
+      "accessSouthY":stateParam.positionY + 25,
+      "accessEastX":stateParam.positionX + 50,
+      "accessEastY":stateParam.positionY,
+      "accessWestX":stateParam.positionX - 50,
+      "accessWestY":stateParam.positionY,
+      "centerX":stateParam.positionX,
+      "centerY":stateParam.positionY,
       "translateX":0,
       "translateY":0
     };
-    this.myStates.push(newState);   
+    this.myStates.push(newState);
+    this.finalPosition = false;
   }
-
+  
   onNewArrowEventRecived(event){
     this.drawArrow = true;   
   }
 
   onMouseDown(state:IState){
-    
+    this.finalPosition = true;    
   }
 
   onDragMoved(event, state){ 
@@ -308,6 +311,7 @@ export class DrawnComponent implements OnInit {
             }
           })
         }
+        
         if(arrow.endX === state.accessWestX && arrow.endY === state.accessWestY){
           arrow.traslationPoint = "horizontal";  
           arrow.endTranslationX = matrix.m41;
