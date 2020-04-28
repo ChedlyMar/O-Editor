@@ -18,6 +18,8 @@ export class ToolsComponent implements OnInit {
   myState:boolean = false;
   stateParm:IState = new IState;
   type:string;
+  create:boolean = false;
+  update:boolean = false;
 
   constructor() { }
 
@@ -26,6 +28,7 @@ export class ToolsComponent implements OnInit {
   } 
 
   createTransition(event:DragEvent, type:string){
+    this.create = true;
     this.myState = true;        
     this.type = type;
     document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
@@ -56,12 +59,18 @@ export class ToolsComponent implements OnInit {
     this.stateParm.positionY = event.clientY;
   }
 
-  createState(){    
-    this.stateParm.name = document.getElementById("state").innerText;
-    this.stateParm.type = this.type;
-    this.addNewStateEvent.emit(this.stateParm);        
-    document.getElementById("state").style.display="none";
-    document.getElementById("stateName").innerText = "";
+  createState(){
+    if(this.create === true){
+      this.stateParm.name = document.getElementById("state").innerText;
+      this.stateParm.type = this.type;
+      this.addNewStateEvent.emit(this.stateParm);        
+      document.getElementById("state").style.display="none";
+      document.getElementById("stateName").innerText = "";
+    }
+    else{
+      this.updateStateName();
+    }    
+    this.create = false;
   }
 
   updateStateName(){
@@ -79,6 +88,15 @@ export class ToolsComponent implements OnInit {
       document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
       document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY).toString() + "px";
       document.getElementById("stateName").innerText = this.stateNewName.name;
+      if(this.stateNewName.type=="transition"){
+        document.getElementById("stateName").style.backgroundColor = "#039be5";
+      }else{
+        if(this.stateNewName.type === "freeFlow"){
+          document.getElementById("stateName").style.backgroundColor = "#fca91a";
+        }else{
+          document.getElementById("stateName").style.backgroundColor = "#009035";
+        }
+      } 
     }
   }
 }

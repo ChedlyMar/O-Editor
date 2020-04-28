@@ -9,16 +9,8 @@
       <div id="final" class="rect" (click)="createTransition($event,'final')">
         Add Final Satatus
       </div>
-      
-      
       <div class="arrow" (click)="selectArrow($event)">
         Arrow
-      </div>
-      <div class="arrow" (click)="createState()">
-        Create
-      </div>
-      <div class="arrow" (click)="updateStateName()">
-        Update name
       </div>
     </div>
     
@@ -26,9 +18,10 @@
 <div>
 <div id="state" class="state" 
       (mousemove)="followCursor($event)"
-      (click)="stopFollowCursor($event)"
-       >
-  <div id="stateName" class="textContent" contenteditable="true">
+      (click)="stopFollowCursor($event)">
+
+  <div id="stateName" class="textContent" 
+        contenteditable="true" (blur)="createState()">
 
   </div>
 </div>
