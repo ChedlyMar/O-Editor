@@ -56,9 +56,8 @@ export class ToolsComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.stateNewName);
     document.getElementById("state").style.display = "block"; 
-    document.getElementById("state").style.left = this.stateNewName.positionX.toString() + "px";
-    document.getElementById("state").style.top = this.stateNewName.positionY.toString() + "px";
+    document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
+    document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY).toString() + "px";
   }
 }
