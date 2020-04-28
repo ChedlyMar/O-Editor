@@ -10,6 +10,7 @@ import { IState } from '../shared/stat';
 export class ToolsComponent implements OnInit {
 
   @Output() addNewStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
+  @Output() updateStateNameEvent :EventEmitter<string> = new EventEmitter<string>(); 
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
   
   @Input() stateNewName:IState;
@@ -33,8 +34,7 @@ export class ToolsComponent implements OnInit {
   followCursor(event:MouseEvent){    
     if(this.myState){
       document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
-      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";  
-      
+      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";        
     }
   }
  
@@ -51,6 +51,11 @@ export class ToolsComponent implements OnInit {
     document.getElementById("stateName").innerText = "";
   }
 
+  updateStateName(){
+    this.stateNewName.name = document.getElementById("stateName").innerText;
+    document.getElementById("state").style.display="none";
+  }
+
   selectArrow(event:DragEvent){
     this.addNewArrowEvent.emit(event);
   }
@@ -59,5 +64,6 @@ export class ToolsComponent implements OnInit {
     document.getElementById("state").style.display = "block"; 
     document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
     document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY).toString() + "px";
+    document.getElementById("stateName").innerText = this.stateNewName.name;
   }
 }
