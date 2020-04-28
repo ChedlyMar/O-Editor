@@ -14,6 +14,7 @@ export class StateService {
     return [
       {
         "name":"First Stat",
+        "type":"transition",
         "positionX":250,
         "positionY":170  ,
         "width":100,
@@ -34,6 +35,7 @@ export class StateService {
       },
       {
         "name":"Second Stat",
+        "type":"freeFlow",
         "positionX":25,
         "positionY":340,
         "width":100,

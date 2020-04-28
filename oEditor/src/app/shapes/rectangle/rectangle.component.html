@@ -1,9 +1,21 @@
-<svg:rect   class="rect" 
+
+<svg:rect   id="rect" class="rect" *ngIf="transition" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-
-<svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} >{{state.name}}</svg:text>
+            style="fill:#039be5;stroke-width:3;stroke:rgb(0,0,0)" 
+/>
+<svg:rect   id="rect" class="rect" *ngIf="freeFlow" 
+            attr.x={{state.positionX}} attr.y={{state.positionY}} 
+            attr.width={{state.width}} attr.height={{state.height}}  
+            style="fill:#fca91a;stroke-width:3;stroke:rgb(0,0,0)" 
+/>
+<svg:rect   id="rect" class="rect" *ngIf="final" 
+            attr.x={{state.positionX}} attr.y={{state.positionY}} 
+            attr.width={{state.width}} attr.height={{state.height}}  
+            style="fill:#009035;stroke-width:3;stroke:rgb(0,0,0)" 
+/>
+            
+<svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} content-editable>{{state.name}}</svg:text>
 <svg:circle class="accessPoint"
             attr.cx={{state.accessNorthX}} attr.cy={{state.accessNorthY}} 
             r="4" 

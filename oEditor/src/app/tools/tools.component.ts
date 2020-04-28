@@ -17,6 +17,7 @@ export class ToolsComponent implements OnInit {
 
   myState:boolean = false;
   stateParm:IState = new IState;
+  type:string;
 
   constructor() { }
 
@@ -26,6 +27,7 @@ export class ToolsComponent implements OnInit {
 
   createTransition(event:DragEvent, type:string){
     this.myState = true;        
+    this.type = type;
     document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
     document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
     document.getElementById("state").style.display = "block";    
@@ -38,9 +40,7 @@ export class ToolsComponent implements OnInit {
       }else{
         document.getElementById("stateName").style.backgroundColor = "#009035";
       }
-    }
-    
-    
+    }    
   }
 
   followCursor(event:MouseEvent){    
@@ -58,6 +58,7 @@ export class ToolsComponent implements OnInit {
 
   createState(){    
     this.stateParm.name = document.getElementById("state").innerText;
+    this.stateParm.type = this.type;
     this.addNewStateEvent.emit(this.stateParm);        
     document.getElementById("state").style.display="none";
     document.getElementById("stateName").innerText = "";

@@ -46,6 +46,7 @@ export class DrawnComponent implements OnInit {
     
     let newState:IState = {
       "name":stateParam.name,
+      "type":stateParam.type,
       "positionX":stateParam.positionX - 50,
       "positionY":stateParam.positionY - 25,
       "width":100,
