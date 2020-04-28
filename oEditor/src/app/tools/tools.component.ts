@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { IState } from '../shared/stat';
+import { StateService } from '../shared/stat.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ToolsComponent implements OnInit {
   create:boolean = false;
   update:boolean = false;
 
-  constructor() { }
+  constructor(private stateService:StateService) { }
 
   ngOnInit(): void {
 
@@ -41,7 +42,17 @@ export class ToolsComponent implements OnInit {
       if(type === "freeFlow"){
         document.getElementById("stateName").style.backgroundColor = "#fca91a";
       }else{
-        document.getElementById("stateName").style.backgroundColor = "#009035";
+        let finalExist = false;
+        this.stateService.getStates().forEach(state =>{
+          if(state.type === "final"){
+            finalExist = true;
+          }
+        });
+        if(!finalExist){
+          document.getElementById("stateName").style.backgroundColor = "#009035";
+        }else{
+          document.getElementById("state").style.display = "none";
+        }
       }
     }    
   }
