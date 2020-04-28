@@ -1,14 +1,25 @@
 <div class="tools">
     <div class="panel" >
-        <div class="rect" (click)="selectRect($event)">
-          Stat
-        </div>
-        <div class="arrow" (click)="selectArrow($event)">
-          Arrow
-        </div>
-        <div class="arrow" (click)="createState()">
-          Create
-        </div>
+      <div  id="transition" class="rect" (click)="createTransition($event,'transition')">
+        Add transition Status
+      </div>
+      <div id="freeFlow" class="rect" (click)="createTransition($event,'freeFlow')">
+        Add Free Flow Status
+      </div>
+      <div id="final" class="rect" (click)="createTransition($event,'final')">
+        Add Final Satatus
+      </div>
+      
+      
+      <div class="arrow" (click)="selectArrow($event)">
+        Arrow
+      </div>
+      <div class="arrow" (click)="createState()">
+        Create
+      </div>
+      <div class="arrow" (click)="updateStateName()">
+        Update name
+      </div>
     </div>
     
 </div>

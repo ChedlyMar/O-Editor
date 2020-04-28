@@ -24,11 +24,23 @@ export class ToolsComponent implements OnInit {
 
   } 
 
-  selectRect(event:DragEvent){
+  createTransition(event:DragEvent, type:string){
     this.myState = true;        
     document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
     document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
     document.getElementById("state").style.display = "block";    
+    document.getElementById("stateName").innerText = "";
+    if(type=="transition"){
+      document.getElementById("stateName").style.backgroundColor = "#039be5";
+    }else{
+      if(type === "freeFlow"){
+        document.getElementById("stateName").style.backgroundColor = "#fca91a";
+      }else{
+        document.getElementById("stateName").style.backgroundColor = "#009035";
+      }
+    }
+    
+    
   }
 
   followCursor(event:MouseEvent){    
@@ -62,8 +74,10 @@ export class ToolsComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     document.getElementById("state").style.display = "block"; 
-    document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
-    document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY).toString() + "px";
-    document.getElementById("stateName").innerText = this.stateNewName.name;
+    if(this.stateNewName){
+      document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
+      document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY).toString() + "px";
+      document.getElementById("stateName").innerText = this.stateNewName.name;
+    }
   }
 }

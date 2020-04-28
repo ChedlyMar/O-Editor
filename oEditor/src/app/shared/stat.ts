@@ -1,12 +1,13 @@
 export class IState {
-    name:string;
-    positionX:number;
-    positionY:number;
+    name?:string;
+    type?:string;
+    positionX?:number;
+    positionY?:number;
     position?:any;
     //before:Stat;
     //after:Stat;
-    width:number;
-    height:number;
+    width?:number;
+    height?:number;
     
     accessNorthX?:number;
     accessNorthY?:number;
