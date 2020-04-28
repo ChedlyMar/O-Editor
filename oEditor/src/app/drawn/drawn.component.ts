@@ -357,67 +357,57 @@ export class DrawnComponent implements OnInit {
   }
 
   onStateSelected(event:CdkDragMove,state){     
-    if(this.drawArrow){
-      if(!this.startArrow){
-        this.StartState = state;
-        this.startArrow = true;
-        this.endArrow = false;
+    if(this.drawArrow){     
+    
+      if(!this.startArrow ){
+        if(state.type != "final"){
+          this.StartState = state;
+          this.startArrow = true;
+          this.endArrow = false;
+        }
       }
       else{
         if(!this.endArrow){
-          this.EndState = state;
-          this.drawArrow= false;
-          this.startArrow = false;
-          this.endArrow = true;
-          this.setArea(this.StartState);
-          if(this.getMyArea(this.EndState) === "North"){
-            let newArrow : IArrow = {
-             "startX":this.StartState.accessNorthX,
-              "startY":this.StartState.accessNorthY,
-              "endX":this.EndState.accessSouthX,
-              "endY":this.EndState.accessSouthY,
-              "startTranslationX": this.StartState.translateX,
-              "startTranslationY":this.StartState.translateY,
-              "endTranslationX":this.EndState.translateX,
-              "endTranslationY":this.EndState.translateY,
-              "traslationPoint": "vertical",            
-            }
-            this.myArrows.push(newArrow)
-          }else{
-            if(this.getMyArea(this.EndState) === "South"){
+          if(state.type != "start" && state.type != "freeFlow"){
+            this.EndState = state;
+            this.drawArrow= false;
+            this.startArrow = false;
+            this.endArrow = true;
+            this.setArea(this.StartState);
+            if(this.getMyArea(this.EndState) === "North"){
               let newArrow : IArrow = {
-               "startX":this.StartState.accessSouthX,
-                "startY":this.StartState.accessSouthY,
-                "endX":this.EndState.accessNorthX,
-                "endY":this.EndState.accessNorthY,
+              "startX":this.StartState.accessNorthX,
+                "startY":this.StartState.accessNorthY,
+                "endX":this.EndState.accessSouthX,
+                "endY":this.EndState.accessSouthY,
                 "startTranslationX": this.StartState.translateX,
                 "startTranslationY":this.StartState.translateY,
                 "endTranslationX":this.EndState.translateX,
                 "endTranslationY":this.EndState.translateY,
-                "traslationPoint": "vertical",      
+                "traslationPoint": "vertical",            
               }
               this.myArrows.push(newArrow)
             }else{
-              if(this.getMyArea(this.EndState) === "East"){
+              if(this.getMyArea(this.EndState) === "South"){
                 let newArrow : IArrow = {
-                 "startX":this.StartState.accessEastX,
-                  "startY":this.StartState.accessEastY ,
-                  "endX":this.EndState.accessWestX,
-                  "endY":this.EndState.accessWestY,
+                "startX":this.StartState.accessSouthX,
+                  "startY":this.StartState.accessSouthY,
+                  "endX":this.EndState.accessNorthX,
+                  "endY":this.EndState.accessNorthY,
                   "startTranslationX": this.StartState.translateX,
                   "startTranslationY":this.StartState.translateY,
                   "endTranslationX":this.EndState.translateX,
                   "endTranslationY":this.EndState.translateY,
-                  "traslationPoint": "horizontal",      
+                  "traslationPoint": "vertical",      
                 }
                 this.myArrows.push(newArrow)
               }else{
-                if(this.getMyArea(this.EndState) === "West"){
+                if(this.getMyArea(this.EndState) === "East"){
                   let newArrow : IArrow = {
-                   "startX":this.StartState.accessWestX,
-                    "startY":this.StartState.accessWestY,
-                    "endX":this.EndState.accessEastX,
-                    "endY":this.EndState.accessEastY,
+                  "startX":this.StartState.accessEastX,
+                    "startY":this.StartState.accessEastY ,
+                    "endX":this.EndState.accessWestX,
+                    "endY":this.EndState.accessWestY,
                     "startTranslationX": this.StartState.translateX,
                     "startTranslationY":this.StartState.translateY,
                     "endTranslationX":this.EndState.translateX,
@@ -425,11 +415,25 @@ export class DrawnComponent implements OnInit {
                     "traslationPoint": "horizontal",      
                   }
                   this.myArrows.push(newArrow)
+                }else{
+                  if(this.getMyArea(this.EndState) === "West"){
+                    let newArrow : IArrow = {
+                    "startX":this.StartState.accessWestX,
+                      "startY":this.StartState.accessWestY,
+                      "endX":this.EndState.accessEastX,
+                      "endY":this.EndState.accessEastY,
+                      "startTranslationX": this.StartState.translateX,
+                      "startTranslationY":this.StartState.translateY,
+                      "endTranslationX":this.EndState.translateX,
+                      "endTranslationY":this.EndState.translateY,
+                      "traslationPoint": "horizontal",      
+                    }
+                    this.myArrows.push(newArrow)
+                  }
                 }
               }
             }
           }
-
         }
       }
     }
