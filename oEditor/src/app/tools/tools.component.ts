@@ -15,6 +15,7 @@ export class ToolsComponent implements OnInit {
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
   
   @Input() stateNewName:IState;
+  @Input() stateOption:IState
 
   myState:boolean = false;
   stateParm:IState = new IState;
@@ -93,11 +94,11 @@ export class ToolsComponent implements OnInit {
     this.addNewArrowEvent.emit(event);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    document.getElementById("state").style.display = "block"; 
+  ngOnChanges(changes: SimpleChanges) {    
     if(this.stateNewName){
+      document.getElementById("state").style.display = "block"; 
       document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
-      document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY).toString() + "px";
+      document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
       document.getElementById("stateName").innerText = this.stateNewName.name;
       if(this.stateNewName.type=="transition"){
         document.getElementById("stateName").style.backgroundColor = "#039be5";
@@ -108,6 +109,12 @@ export class ToolsComponent implements OnInit {
           document.getElementById("stateName").style.backgroundColor = "#009035";
         }
       } 
+    }
+    if(this.stateOption){
+      console.log(this.stateOption);
+      
+      document.getElementById("sideTools").style.left = (this.stateOption.positionX + this.stateOption.translateX + 105).toString() + "px";
+      document.getElementById("sideTools").style.top = (this.stateOption.positionY + this.stateOption.translateY + 70).toString() + "px";
     }
   }
 }

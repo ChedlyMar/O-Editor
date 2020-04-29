@@ -21,6 +21,7 @@ export class DrawnComponent implements OnInit {
   newArrow = false;
 
   stateNewName:IState;
+  stateOption:IState;
 
   drawArrow = false;
   startArrow = false;
@@ -356,7 +357,7 @@ export class DrawnComponent implements OnInit {
     }    
   }
 
-  onStateSelected(event:CdkDragMove,state){     
+  onStateSelected(event:CdkDragMove,state:IState){     
     if(this.drawArrow){     
     
       if(!this.startArrow ){
@@ -436,6 +437,9 @@ export class DrawnComponent implements OnInit {
           }
         }
       }
+    }
+    else{
+      this.stateOption = state;
     }
   } 
 
