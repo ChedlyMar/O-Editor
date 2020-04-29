@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="name">
+        <mat-form-field appearance="fill" >
+            <mat-label>Flow name</mat-label>
+            <input matInput required>
+        </mat-form-field>
+    </div>
+    <div class="description" >
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <input matInput #description maxlength="150" >
+            <mat-hint align="end">{{description.value.length}} / 150</mat-hint>
+        </mat-form-field>
+    </div>
+</div>
