@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { IState } from './stat';
 import { IArrow } from './arrow';
 
