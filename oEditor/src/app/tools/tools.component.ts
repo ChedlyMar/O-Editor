@@ -13,15 +13,18 @@ export class ToolsComponent implements OnInit {
   @Output() addNewStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   @Output() updateStateNameEvent :EventEmitter<string> = new EventEmitter<string>(); 
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
+  @Output() addNewArrowSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   
   @Input() stateNewName:IState;
-  @Input() stateOption:IState
+  @Input() didplaySideTools:boolean;
+  @Input() changeName:boolean;
 
   myState:boolean = false;
   stateParm:IState = new IState;
   type:string;
   create:boolean = false;
-  update:boolean = false;
+  //update:boolean = false;
+
 
   constructor(private stateService:StateService) { }
 
@@ -68,7 +71,7 @@ export class ToolsComponent implements OnInit {
   stopFollowCursor(event){
     this.myState = false;
     this.stateParm.positionX = event.clientX;
-    this.stateParm.positionY = event.clientY;
+    this.stateParm.positionY = event.clientY - 70;
   }
 
   createState(){
@@ -80,41 +83,68 @@ export class ToolsComponent implements OnInit {
       document.getElementById("stateName").innerText = "";
     }
     else{
-      this.updateStateName();
+      this.updateStateName(this.stateNewName);
     }    
     this.create = false;
   }
 
-  updateStateName(){
-    this.stateNewName.name = document.getElementById("stateName").innerText;
+  updateStateName(state:IState){
+    state.name = document.getElementById("stateName").innerText;
     document.getElementById("state").style.display="none";
   }
 
   selectArrow(event:DragEvent){
     this.addNewArrowEvent.emit(event);
+      
+  } 
+  selectArrowSideTools(event:DragEvent){   
+    this.addNewArrowSideToolsEvent.emit(this.stateNewName);
+    console.log(this.stateNewName);
+    
   }
 
-  ngOnChanges(changes: SimpleChanges) {    
-    if(this.stateNewName){
-      document.getElementById("state").style.display = "block"; 
-      document.getElementById("state").style.left = (this.stateNewName.positionX + this.stateNewName.translateX).toString() + "px";
-      document.getElementById("state").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
-      document.getElementById("stateName").innerText = this.stateNewName.name;
-      if(this.stateNewName.type=="transition"){
-        document.getElementById("stateName").style.backgroundColor = "#039be5";
+  changeStateName(state:IState){
+    
+    document.getElementById("state").style.display = "block"; 
+    document.getElementById("state").style.left = (state.positionX + state.translateX).toString() + "px";
+    document.getElementById("state").style.top = (state.positionY + state.translateY + 70).toString() + "px";
+    document.getElementById("stateName").innerText = this.stateNewName.name;
+    document.getElementById("stateName").focus();
+    document.getElementById("sideTools").style.display = "none";
+    if(state.type=="transition"){
+      document.getElementById("stateName").style.backgroundColor = "#039be5";
+    }else{
+      if(this.stateNewName.type === "freeFlow"){
+        document.getElementById("stateName").style.backgroundColor = "#fca91a";
       }else{
-        if(this.stateNewName.type === "freeFlow"){
-          document.getElementById("stateName").style.backgroundColor = "#fca91a";
-        }else{
-          document.getElementById("stateName").style.backgroundColor = "#009035";
-        }
-      } 
+        document.getElementById("stateName").style.backgroundColor = "#009035";
+      }
+    } 
+  }
+
+  onClickedOutsideSideTools($event){
+    if(!this.didplaySideTools){
+    document.getElementById("sideTools").style.display = "none";
     }
-    if(this.stateOption){
-      console.log(this.stateOption);
-      
-      document.getElementById("sideTools").style.left = (this.stateOption.positionX + this.stateOption.translateX + 105).toString() + "px";
-      document.getElementById("sideTools").style.top = (this.stateOption.positionY + this.stateOption.translateY + 70).toString() + "px";
+  }
+  
+
+  
+
+  ngOnChanges(changes: SimpleChanges) {    
+    if(this.changeName){
+      this.changeStateName(this.stateNewName);    
+      this.changeName = false;
+    }else{
+      if(this.didplaySideTools ){
+        document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 105).toString() + "px";
+        document.getElementById("sideTools").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
+        document.getElementById("sideTools").style.display = "block";
+      }else{
+        if(!this.didplaySideTools){
+          //document.getElementById("sideTools").style.display = "none";
+        }
+      }
     }
   }
 }

@@ -21,8 +21,9 @@
 
 <app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
            (addNewArrowEvent)="onNewArrowEventRecived($event)"
+           (addNewArrowSideToolsEvent)="onNewArrowSideToolsRecived($event)"
            [stateNewName]="stateNewName"
-           [changeName]="changeName"
+           [changeName]="changeName"        
            [didplaySideTools]="didplaySideTools"
            >
 </app-tools>

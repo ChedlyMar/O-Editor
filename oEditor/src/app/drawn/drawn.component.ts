@@ -32,6 +32,7 @@ export class DrawnComponent implements OnInit {
 
   didplaySideTools:boolean = false;
   changeName: boolean = false;
+  
 
   finalPosition:boolean = true;
   
@@ -72,6 +73,17 @@ export class DrawnComponent implements OnInit {
     this.drawArrow = true;   
   }
 
+  onNewArrowSideToolsRecived(state:IState){
+    //console.log(state);
+    if(state.type != "final"){
+      this.drawArrow = true;
+      this.StartState = state;
+      this.startArrow = true;
+      this.endArrow = false;
+    }
+    
+  }
+
   onMouseDown(state:IState){
     this.finalPosition = true;
   }
@@ -79,11 +91,13 @@ export class DrawnComponent implements OnInit {
   updateStateName(state:IState){
     this.stateNewName = state;
     this.changeName = true ;
+    //this.didplaySideTools = false;
+
   }
 
   onClickedOutsideState($event){
-    this.stateNewName = null;
-    this.changeName = false ;    
+    this.changeName = false ;  
+    //this.didplaySideTools = false;  
   }
 
   onDragMoved(event, state){ 
@@ -443,10 +457,11 @@ export class DrawnComponent implements OnInit {
       }
     }
     else{
-      //this.stateNewName = state;
-      
+      this.changeName = false;
+      this.stateNewName = state;
+      this.didplaySideTools = true;      
     }
-    this.didplaySideTools = true;
+    
   } 
 
   

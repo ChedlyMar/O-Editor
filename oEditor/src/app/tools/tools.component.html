@@ -24,21 +24,22 @@
   </div>
 </div>
 
-<div id="sideTools" class="sideTools">
-  <div class="sideArrow">
-    arrow
+<div id="sideTools" (clickOutside)="onClickedOutsideSideTools($event)" >
+  <div class="sideTools" (click)="selectArrowSideTools($event)">
+    <mat-icon aria-hidden="false" aria-label="Example home icon">
+      trending_up
+    </mat-icon>    
   </div>
-  <div class="delete">
-    delete
+  <div class="sideTools" >
+    <span class="material-icons">
+      title
+    </span>
   </div>
-  <div class="transition">
-    transition
+  <div class="sideTools">
+    <mat-icon aria-hidden="false" aria-label="Example home icon">
+      delete_forever
+    </mat-icon>
   </div>
-  <div class="final">
-    final
-  </div>
-  <div class="name">
-    name
-  </div>
+  
 
 </div>
