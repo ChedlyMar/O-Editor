@@ -72,16 +72,17 @@ export class DrawnComponent implements OnInit {
   onNewArrowEventRecived(event){
     this.drawArrow = true;   
   }
+  onChangeNameSideToolsRecived(state: IState){
+    this.updateStateName(state);
+  }
 
   onNewArrowSideToolsRecived(state:IState){
-    //console.log(state);
     if(state.type != "final"){
       this.drawArrow = true;
       this.StartState = state;
       this.startArrow = true;
       this.endArrow = false;
-    }
-    
+    }    
   }
 
   onMouseDown(state:IState){
@@ -91,13 +92,10 @@ export class DrawnComponent implements OnInit {
   updateStateName(state:IState){
     this.stateNewName = state;
     this.changeName = true ;
-    //this.didplaySideTools = false;
-
   }
 
   onClickedOutsideState($event){
     this.changeName = false ;  
-    //this.didplaySideTools = false;  
   }
 
   onDragMoved(event, state){ 
@@ -462,9 +460,7 @@ export class DrawnComponent implements OnInit {
       this.didplaySideTools = true;      
     }
     
-  } 
-
-  
+  }   
 
   setArea(state:IState){
     this.a1 = (state.positionY - state.centerY) / (state.positionX - state.centerX);

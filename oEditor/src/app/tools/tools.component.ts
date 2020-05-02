@@ -14,6 +14,7 @@ export class ToolsComponent implements OnInit {
   @Output() updateStateNameEvent :EventEmitter<string> = new EventEmitter<string>(); 
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
   @Output() addNewArrowSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
+  @Output() changeNameSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>();
   
   @Input() stateNewName:IState;
   @Input() didplaySideTools:boolean;
@@ -99,8 +100,10 @@ export class ToolsComponent implements OnInit {
   } 
   selectArrowSideTools(event:DragEvent){   
     this.addNewArrowSideToolsEvent.emit(this.stateNewName);
-    console.log(this.stateNewName);
-    
+  }
+
+  changeNameSideTools(){
+    this.changeNameSideToolsEvent.emit(this.stateNewName);
   }
 
   changeStateName(state:IState){
