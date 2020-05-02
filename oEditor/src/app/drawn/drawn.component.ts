@@ -13,15 +13,13 @@ import { IArrow } from '../shared/arrow';
 export class DrawnComponent implements OnInit {
 
   myStates : IState[];
-  newState = false;
   StartState : IState;
   EndState : IState;
 
   myArrows : IArrow[];
-  newArrow = false;
 
   stateNewName:IState;
-  stateOption:IState;
+  //stateOption:IState;
 
   drawArrow = false;
   startArrow = false;
@@ -32,9 +30,10 @@ export class DrawnComponent implements OnInit {
   a2:number;
   b2:number;
 
-  finalPosition:boolean = true;
+  didplaySideTools:boolean = false;
+  changeName: boolean = false;
 
-  linkedArrow:IArrow[] = [];
+  finalPosition:boolean = true;
   
   constructor(private stateService:StateService) { }
 
@@ -79,7 +78,12 @@ export class DrawnComponent implements OnInit {
 
   updateStateName(state:IState){
     this.stateNewName = state;
+    this.changeName = true ;
+  }
 
+  onClickedOutsideState($event){
+    this.stateNewName = null;
+    this.changeName = false ;    
   }
 
   onDragMoved(event, state){ 
@@ -439,9 +443,13 @@ export class DrawnComponent implements OnInit {
       }
     }
     else{
-      this.stateOption = state;
+      //this.stateNewName = state;
+      
     }
+    this.didplaySideTools = true;
   } 
+
+  
 
   setArea(state:IState){
     this.a1 = (state.positionY - state.centerY) / (state.positionX - state.centerX);

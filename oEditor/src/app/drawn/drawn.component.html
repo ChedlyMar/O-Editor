@@ -2,16 +2,16 @@
      >    
     <g *ngFor="let state of myStates"
         [state]="state"
-
         [translation]="state.translateX"
         
-
         app-rectangle cdkDrag 
+        (cdkDragMoved)="onDragMoved($event,state)"
+
         (mousedown)="onMouseDown(state)"
         (dblclick)="updateStateName(state)"
-        
-        (cdkDragMoved)="onDragMoved($event,state)"
-        (click)="onStateSelected($event,state)">        
+        (click)="onStateSelected($event,state)"
+        (clickOutside)="onClickedOutsideState($event)" 
+        >        
     </g>  
     <g *ngFor="let arrow of myArrows" 
         [arrow]="arrow" app-arrow
@@ -22,7 +22,8 @@
 <app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
            (addNewArrowEvent)="onNewArrowEventRecived($event)"
            [stateNewName]="stateNewName"
-           [stateOption]="stateOption"
+           [changeName]="changeName"
+           [didplaySideTools]="didplaySideTools"
            >
 </app-tools>
 
