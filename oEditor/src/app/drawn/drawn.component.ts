@@ -42,9 +42,14 @@ export class DrawnComponent implements OnInit {
     this.myStates = this.stateService.getStates();
     this.myArrows = this.stateService.getArrow();
   }
-  
+  type:string="";
   onNewStateEventRecived(stateParam:IState){   
-    
+    if(stateParam.type === "transitionSideTools"){
+      this.type="transitionSideTools";
+      stateParam.type = "transition";
+      
+     
+    }
     let newState:IState = {
       "name":stateParam.name,
       "type":stateParam.type,
@@ -66,7 +71,13 @@ export class DrawnComponent implements OnInit {
       "translateY":0
     };
     this.myStates.push(newState);
+    if(this.type==="transitionSideTools"){
+
+      let event : CdkDragMove;
+      this.onStateSelected(event,newState);
+    }
     this.finalPosition = false;
+    
   }
   
   onNewArrowEventRecived(event){

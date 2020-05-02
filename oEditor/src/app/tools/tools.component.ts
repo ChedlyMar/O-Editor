@@ -24,7 +24,6 @@ export class ToolsComponent implements OnInit {
   stateParm:IState = new IState;
   type:string;
   create:boolean = false;
-  //update:boolean = false;
 
 
   constructor(private stateService:StateService) { }
@@ -41,10 +40,10 @@ export class ToolsComponent implements OnInit {
     document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
     document.getElementById("state").style.display = "block";    
     document.getElementById("stateName").innerText = "";
-    if(type=="transition"){
+    if(type === "transition" || type==="transitionSideTools"){
       document.getElementById("stateName").style.backgroundColor = "#039be5";
     }else{
-      if(type === "freeFlow"){
+      if(type === "freeFlow" || type === "freeFlowSideTools"){
         document.getElementById("stateName").style.backgroundColor = "#fca91a";
       }else{
         let finalExist = false;
@@ -77,6 +76,7 @@ export class ToolsComponent implements OnInit {
 
   createState(){
     if(this.create === true){
+      this.addNewArrowSideToolsEvent.emit(this.stateNewName);
       this.stateParm.name = document.getElementById("state").innerText;
       this.stateParm.type = this.type;
       this.addNewStateEvent.emit(this.stateParm);        
@@ -102,7 +102,7 @@ export class ToolsComponent implements OnInit {
     this.addNewArrowSideToolsEvent.emit(this.stateNewName);
   }
 
-  changeNameSideTools(){
+  changeNameSideTools(event){
     this.changeNameSideToolsEvent.emit(this.stateNewName);
   }
 
@@ -131,8 +131,13 @@ export class ToolsComponent implements OnInit {
     }
   }
   
+  createTransitionSideTools(event){
 
-  
+  }
+
+  createFreeFlowSideTools(event){
+
+  }
 
   ngOnChanges(changes: SimpleChanges) {    
     if(this.changeName){

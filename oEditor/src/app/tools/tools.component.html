@@ -40,6 +40,14 @@
       delete_forever
     </mat-icon>
   </div>
-  
-
+  <div class="sideTools"  (click)="createTransition($event,'transitionSideTools')">
+    <span id="sideTransition" class="material-icons">
+        stop
+    </span>
+  </div>
+  <div class="sideTools" (click)="createTransition($event,'freeFlowSideTools')">
+    <span id="sideFreeFlow" class="material-icons">
+        stop
+    </span>
+  </div>
 </div>
