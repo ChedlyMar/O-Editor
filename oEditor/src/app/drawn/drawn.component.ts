@@ -98,9 +98,7 @@ export class DrawnComponent implements OnInit {
   }
 
   onMouseDown(state:IState){
-    this.finalPosition = true;
-    
-    
+    this.finalPosition = true;    
   }
 
   updateStateName(state:IState){
@@ -108,9 +106,9 @@ export class DrawnComponent implements OnInit {
     this.changeName = true ;
     this.displaySideTools = false;
   }
-
-
+  draggedDisplaySideTools:boolean = false;
   onDragMoved(event, state){ 
+    this.draggedDisplaySideTools = true;
     this.displaySideTools = false;
     let element = event.source.getRootElement();
     let style = window.getComputedStyle(element);
@@ -472,11 +470,15 @@ export class DrawnComponent implements OnInit {
     else{
       this.changeName = false;
       this.stateNewName = state;
-      this.displaySideTools = true;
-      this.fromState = true;
+      if(!this.draggedDisplaySideTools){
+        this.displaySideTools = true;
+        this.fromState = true;
+      }
+      this.draggedDisplaySideTools = false;
             
     }
   }   
+
   hideSideTools(){
     if(!this.fromState){
       this.displaySideTools = false;
