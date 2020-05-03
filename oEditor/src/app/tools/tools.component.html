@@ -15,16 +15,17 @@
     </div>    
 </div>
 <div>
+  
 <div id="state" class="state" 
       (mousemove)="followCursor($event)"
       (click)="stopFollowCursor($event)">
 
   <div id="stateName" class="textContent" 
-        contenteditable="true" (blur)="createState()">
+        contenteditable="true" >
   </div>
 </div>
 
-<div id="sideTools" (clickOutside)="onClickedOutsideSideTools($event)" >
+<div id="sideTools" >
   <div class="sideTools" (click)="selectArrowSideTools($event)">
     <mat-icon aria-hidden="false" aria-label="Example home icon">
       trending_up
@@ -51,3 +52,5 @@
     </span>
   </div>
 </div>
+
+<div class="test" (click)="test()"></div>

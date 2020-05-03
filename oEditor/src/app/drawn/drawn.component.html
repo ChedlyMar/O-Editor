@@ -1,5 +1,5 @@
 <svg  style="border:1px solid black;"
-     >    
+    (click)="hideSideTools()" >    
     <g *ngFor="let state of myStates"
         [state]="state"
         [translation]="state.translateX"
@@ -10,7 +10,6 @@
         (mousedown)="onMouseDown(state)"
         (dblclick)="updateStateName(state)"
         (click)="onStateSelected($event,state)"
-        (clickOutside)="onClickedOutsideState($event)" 
         >        
     </g>  
     <g *ngFor="let arrow of myArrows" 
@@ -24,86 +23,9 @@
            (addNewArrowSideToolsEvent)="onNewArrowSideToolsRecived($event)"
            (changeNameSideToolsEvent)="onChangeNameSideToolsRecived($event)"
            [stateNewName]="stateNewName"
-           [changeName]="changeName"        
-           [didplaySideTools]="didplaySideTools"
+           [changeName]="changeName"
+            [displaySideTools]="displaySideTools"
+
+           
            >
 </app-tools>
-
-
-<!--
-<svg id="mysvg" xmlns="http://www.w3.org/2000/svg"
-     width="100%" height="500" style="border:1px solid black; ">
-
-    <svg x="10" class="groupe">
-        <g  cdkDragBoundary="#mysvg" cdkDrag >
-        <svg:rect  width="100" height="50" class="item"></svg:rect>
-        
-        <svg:circle class="circle" cx="0" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-        <svg:circle class="circle" cx="100" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-        <svg:circle class="circle" cx="50" cy="0" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-        <svg:circle class="circle" cx="50" cy="50" r="3" stroke="black" stroke-width="0" fill="red"></circle>        
-    </g>
-    </svg>
-
-    <svg x="100" y="150" class="groupe">
-        <g  cdkDragBoundary="#mysvg" cdkDrag >
-        <svg:rect  width="100" height="50" class="item"></svg:rect>
-        
-        <svg:circle class="circle" cx="0" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-        <svg:circle class="circle" cx="100" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-        <svg:circle class="circle" cx="50" cy="0" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-        <svg:circle class="circle" cx="50" cy="50" r="3" stroke="black" stroke-width="0" fill="red"></circle>        
-    </g>
-    </svg>
-
-    <svg height="210" width="500" >
-        <svg:line [attr.x1]="x1" [attr.y1]="y1" [attr.x2]="x2" [attr.y2]="y2" style="stroke:rgb(255,0,0);stroke-width:2" />
-    </svg>
-
-</svg>
--->
-
-<!--
-<div>
-    <div>
-        <div (click)="createCircle()"></div>
-        <div (click)="createRect()"></div>
-        <div (click)="createArrow()"></div>
-    </div>
-    <div class="svg">
-        
-<svg id="mysvg" xmlns="http://www.w3.org/2000/svg"
-width="100%" height="500" style="border:1px solid black; ">
-
-<svg x="10" class="groupe">
-   <g  cdkDragBoundary="#mysvg" cdkDrag >
-   <svg:rect  width="100" height="50" class="item"></svg:rect>
-   
-   <svg:circle class="circle" cx="0" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-   <svg:circle class="circle" cx="100" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-   <svg:circle class="circle" cx="50" cy="0" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-   <svg:circle class="circle" cx="50" cy="50" r="3" stroke="black" stroke-width="0" fill="red"></circle>        
-</g>
-</svg>
-
-<svg x="100" y="150" class="groupe">
-   <g  cdkDragBoundary="#mysvg" cdkDrag >
-   <svg:rect  width="100" height="50" class="item"></svg:rect>
-   
-   <svg:circle class="circle" cx="0" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-   <svg:circle class="circle" cx="100" cy="25" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-   <svg:circle class="circle" cx="50" cy="0" r="3" stroke="black" stroke-width="0" fill="red"></circle>
-   <svg:circle class="circle" cx="50" cy="50" r="3" stroke="black" stroke-width="0" fill="red"></circle>        
-</g>
-</svg>
-
-<svg height="210" width="500" >
-   <svg:line [attr.x1]="x1" [attr.y1]="y1" [attr.x2]="x2" [attr.y2]="y2" style="stroke:rgb(255,0,0);stroke-width:2" />
-</svg>
-
-</svg>
-
-    </div>
-
-</div>
--->

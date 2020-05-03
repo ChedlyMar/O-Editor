@@ -19,7 +19,6 @@ export class DrawnComponent implements OnInit {
   myArrows : IArrow[];
 
   stateNewName:IState;
-  //stateOption:IState;
 
   drawArrow = false;
   startArrow = false;
@@ -30,9 +29,10 @@ export class DrawnComponent implements OnInit {
   a2:number;
   b2:number;
 
-  didplaySideTools:boolean = false;
+  displaySideTools:boolean = false;
   changeName: boolean = false;
   type:string="";
+  fromState : boolean;
 
   finalPosition:boolean = true;
   
@@ -77,15 +77,13 @@ export class DrawnComponent implements OnInit {
       let event : CdkDragMove;
       this.onStateSelected(event,newState);
     }
-
-
-    this.finalPosition = false;
-    
+    this.finalPosition = false;    
   }
   
   onNewArrowEventRecived(event){
     this.drawArrow = true;   
   }
+
   onChangeNameSideToolsRecived(state: IState){
     this.updateStateName(state);
   }
@@ -101,18 +99,19 @@ export class DrawnComponent implements OnInit {
 
   onMouseDown(state:IState){
     this.finalPosition = true;
+    
+    
   }
 
   updateStateName(state:IState){
     this.stateNewName = state;
     this.changeName = true ;
+    this.displaySideTools = false;
   }
 
-  onClickedOutsideState($event){
-    this.changeName = false ;  
-  }
 
   onDragMoved(event, state){ 
+    this.displaySideTools = false;
     let element = event.source.getRootElement();
     let style = window.getComputedStyle(element);
     let matrix = new WebKitCSSMatrix(style.webkitTransform);
@@ -389,6 +388,7 @@ export class DrawnComponent implements OnInit {
 
   onStateSelected(event:CdkDragMove,state:IState){     
     if(this.drawArrow){     
+      this.displaySideTools = false;
     
       if(!this.startArrow ){
         if(state.type != "final"){
@@ -398,7 +398,7 @@ export class DrawnComponent implements OnInit {
         }
       }
       else{
-        if(!this.endArrow){
+        if(!this.endArrow && this.StartState != state){
           if(state.type != "start" && state.type != "freeFlow"){
             this.EndState = state;
             this.drawArrow= false;
@@ -466,15 +466,23 @@ export class DrawnComponent implements OnInit {
             }
           }
         }
+        
       }
     }
     else{
       this.changeName = false;
       this.stateNewName = state;
-      this.didplaySideTools = true;      
+      this.displaySideTools = true;
+      this.fromState = true;
+            
     }
-    
   }   
+  hideSideTools(){
+    if(!this.fromState){
+      this.displaySideTools = false;
+    }
+    this.fromState = false;
+  }
 
   setArea(state:IState){
     this.a1 = (state.positionY - state.centerY) / (state.positionX - state.centerX);
