@@ -20,7 +20,7 @@
       (mousemove)="followCursor($event)"
       (click)="stopFollowCursor($event)">
 
-  <div id="stateName" class="textContent" 
+  <div id="stateName" class="textContent" (blur)="createState()"
         contenteditable="true" >
   </div>
 </div>
