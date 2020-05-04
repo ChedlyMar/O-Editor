@@ -13,6 +13,7 @@ export class RectangleComponent implements OnInit {
   transition:boolean = false;
   freeFlow:boolean = false;
   final:boolean = false;
+  start:boolean = false;
 
   constructor() {
     
@@ -25,7 +26,11 @@ export class RectangleComponent implements OnInit {
       if(this.state.type === "freeFlow"){
         this.freeFlow = true;
       }else{
-        this.final = true;
+        if(this.state.type === "final"){
+          this.final = true;
+        }else{
+          this.start = true;
+        }
       }
     }    
   }    

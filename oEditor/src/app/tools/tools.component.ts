@@ -33,6 +33,7 @@ export class ToolsComponent implements OnInit {
   } 
 
   createTransition(event:DragEvent, type:string){
+
     this.create = true;
     this.myState = true;        
     this.type = type;
@@ -109,18 +110,23 @@ export class ToolsComponent implements OnInit {
   changeStateName(state:IState){
     
     document.getElementById("state").style.display = "block"; 
-    document.getElementById("state").style.left = (state.positionX + state.translateX).toString() + "px";
-    document.getElementById("state").style.top = (state.positionY + state.translateY + 70).toString() + "px";
+    document.getElementById("state").style.left = (state.positionX + state.translateX + 1).toString() + "px";
+    document.getElementById("state").style.top = (state.positionY + state.translateY + 71).toString() + "px";
     document.getElementById("stateName").innerText = this.stateNewName.name;
     document.getElementById("stateName").focus();
+    
     document.getElementById("sideTools").style.display = "none";
     if(state.type=="transition"){
-      document.getElementById("stateName").style.backgroundColor = "#039be5";
+      document.getElementById("stateName").style.backgroundColor = "#fcfcfc";      
     }else{
       if(this.stateNewName.type === "freeFlow"){
-        document.getElementById("stateName").style.backgroundColor = "#fca91a";
+        document.getElementById("stateName").style.backgroundColor = "#fcfcfc";
       }else{
-        document.getElementById("stateName").style.backgroundColor = "#009035";
+        if(this.stateNewName.type === "final"){
+        document.getElementById("stateName").style.backgroundColor = "#fcfcfc";
+        }else{
+          document.getElementById("stateName").style.backgroundColor = "#fcfcfc";
+        }
       }
     } 
   }
@@ -129,21 +135,19 @@ export class ToolsComponent implements OnInit {
   
 
   test(){
-    document.getElementById("sideTools").style.display = "block";
-    console.log("show");
-    this.displaySideTools = true;
+    document.body.style.cursor =  "url('./assets/images/transitionCursor.svg'), auto";
   }
   
   ngOnChanges(changes: SimpleChanges) {    
     if(this.changeName){
       this.changeStateName(this.stateNewName);    
-      this.changeName = false;
+      //this.changeName = false;
     }else{
       
       
       if(this.displaySideTools ){
-        //document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 105).toString() + "px";
-        //document.getElementById("sideTools").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
+        document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 115).toString() + "px";
+        document.getElementById("sideTools").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
         document.getElementById("sideTools").style.display = "block";
         this.test();
       }else{

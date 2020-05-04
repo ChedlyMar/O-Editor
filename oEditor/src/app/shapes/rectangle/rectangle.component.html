@@ -2,20 +2,29 @@
 <svg:rect   id="rect" class="rect" *ngIf="transition" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:#039be5;stroke-width:3;stroke:rgb(0,0,0)" 
+            style="fill:#039be5;"  rx="15" ry="15" 
 />
 <svg:rect   id="rect" class="rect" *ngIf="freeFlow" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:#fca91a;stroke-width:3;stroke:rgb(0,0,0)" 
+            style="fill:#fca91a;" rx="15" ry="15" 
 />
 <svg:rect   id="rect" class="rect" *ngIf="final" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:#009035;stroke-width:3;stroke:rgb(0,0,0)" 
+            style="fill:#009035;" rx="15" ry="15" 
 />
-            
-<svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} content-editable>{{state.name}}</svg:text>
+<svg:rect   id="rect" class="rect" *ngIf="start" 
+            attr.x={{state.positionX}} attr.y={{state.positionY}} 
+            attr.width={{state.width}} attr.height={{state.height}}  
+            style="fill:rgb(44, 44, 44);"  rx="15" ry="15" 
+/>
+       
+<svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} 
+            text-anchor="middle" 
+            style="font-family: Arial, sans-serif; font-size: 14px; color: white; font-weight: bold; text-decoration: none; fill: rgb(255, 255, 255);">
+            {{state.name}}
+</svg:text>
 <svg:circle class="accessPoint"
             attr.cx={{state.accessNorthX}} attr.cy={{state.accessNorthY}} 
             r="4" 

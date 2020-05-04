@@ -34,6 +34,8 @@ export class DrawnComponent implements OnInit {
   type:string="";
   fromState : boolean;
 
+  preventSingleClick : boolean = false;
+  draggedDisplaySideTools:boolean = false;
   finalPosition:boolean = true;
   
   constructor(private stateService:StateService) { }
@@ -55,17 +57,17 @@ export class DrawnComponent implements OnInit {
     let newState:IState = {
       "name":stateParam.name,
       "type":stateParam.type,
-      "positionX":stateParam.positionX - 50,
+      "positionX":stateParam.positionX - 55,
       "positionY":stateParam.positionY - 25,
-      "width":100,
+      "width":110,
       "height":50,
       "accessNorthX":stateParam.positionX,
       "accessNorthY":stateParam.positionY - 25,
       "accessSouthX":stateParam.positionX,
       "accessSouthY":stateParam.positionY + 25,
-      "accessEastX":stateParam.positionX + 50,
+      "accessEastX":stateParam.positionX + 55,
       "accessEastY":stateParam.positionY,
-      "accessWestX":stateParam.positionX - 50,
+      "accessWestX":stateParam.positionX - 55,
       "accessWestY":stateParam.positionY,
       "centerX":stateParam.positionX,
       "centerY":stateParam.positionY,
@@ -103,10 +105,11 @@ export class DrawnComponent implements OnInit {
 
   updateStateName(state:IState){
     this.stateNewName = state;
-    this.changeName = true ;
+    this.changeName = true;
     this.displaySideTools = false;
+    this.preventSingleClick = true;
   }
-  draggedDisplaySideTools:boolean = false;
+  
   onDragMoved(event, state){ 
     this.draggedDisplaySideTools = true;
     this.displaySideTools = false;
@@ -385,98 +388,104 @@ export class DrawnComponent implements OnInit {
   }
 
   onStateSelected(event:CdkDragMove,state:IState){     
-    if(this.drawArrow){     
-      this.displaySideTools = false;
-    
-      if(!this.startArrow ){
-        if(state.type != "final"){
-          this.StartState = state;
-          this.startArrow = true;
-          this.endArrow = false;
-        }
-      }
-      else{
-        if(!this.endArrow && this.StartState != state){
-          if(state.type != "start" && state.type != "freeFlow"){
-            this.EndState = state;
-            this.drawArrow= false;
-            this.startArrow = false;
-            this.endArrow = true;
-            this.setArea(this.StartState);
-            if(this.getMyArea(this.EndState) === "North"){
-              let newArrow : IArrow = {
-              "startX":this.StartState.accessNorthX,
-                "startY":this.StartState.accessNorthY,
-                "endX":this.EndState.accessSouthX,
-                "endY":this.EndState.accessSouthY,
-                "startTranslationX": this.StartState.translateX,
-                "startTranslationY":this.StartState.translateY,
-                "endTranslationX":this.EndState.translateX,
-                "endTranslationY":this.EndState.translateY,
-                "traslationPoint": "vertical",            
-              }
-              this.myArrows.push(newArrow)
-            }else{
-              if(this.getMyArea(this.EndState) === "South"){
-                let newArrow : IArrow = {
-                "startX":this.StartState.accessSouthX,
-                  "startY":this.StartState.accessSouthY,
-                  "endX":this.EndState.accessNorthX,
-                  "endY":this.EndState.accessNorthY,
-                  "startTranslationX": this.StartState.translateX,
-                  "startTranslationY":this.StartState.translateY,
-                  "endTranslationX":this.EndState.translateX,
-                  "endTranslationY":this.EndState.translateY,
-                  "traslationPoint": "vertical",      
-                }
-                this.myArrows.push(newArrow)
-              }else{
-                if(this.getMyArea(this.EndState) === "East"){
+    this.preventSingleClick = false;
+    setTimeout(()=>{
+      if(!this.preventSingleClick){
+        if(this.drawArrow){     
+          this.displaySideTools = false;
+        
+          if(!this.startArrow ){
+            if(state.type != "final"){
+              this.StartState = state;
+              this.startArrow = true;
+              this.endArrow = false;
+            }
+          }
+          else{
+            if(!this.endArrow && this.StartState != state){
+              if(state.type != "start" && state.type != "freeFlow"){
+                this.EndState = state;
+                this.drawArrow= false;
+                this.startArrow = false;
+                this.endArrow = true;
+                this.setArea(this.StartState);
+                if(this.getMyArea(this.EndState) === "North"){
                   let newArrow : IArrow = {
-                  "startX":this.StartState.accessEastX,
-                    "startY":this.StartState.accessEastY ,
-                    "endX":this.EndState.accessWestX,
-                    "endY":this.EndState.accessWestY,
+                  "startX":this.StartState.accessNorthX,
+                    "startY":this.StartState.accessNorthY,
+                    "endX":this.EndState.accessSouthX,
+                    "endY":this.EndState.accessSouthY,
                     "startTranslationX": this.StartState.translateX,
                     "startTranslationY":this.StartState.translateY,
                     "endTranslationX":this.EndState.translateX,
                     "endTranslationY":this.EndState.translateY,
-                    "traslationPoint": "horizontal",      
+                    "traslationPoint": "vertical",            
                   }
                   this.myArrows.push(newArrow)
                 }else{
-                  if(this.getMyArea(this.EndState) === "West"){
+                  if(this.getMyArea(this.EndState) === "South"){
                     let newArrow : IArrow = {
-                    "startX":this.StartState.accessWestX,
-                      "startY":this.StartState.accessWestY,
-                      "endX":this.EndState.accessEastX,
-                      "endY":this.EndState.accessEastY,
+                    "startX":this.StartState.accessSouthX,
+                      "startY":this.StartState.accessSouthY,
+                      "endX":this.EndState.accessNorthX,
+                      "endY":this.EndState.accessNorthY,
                       "startTranslationX": this.StartState.translateX,
                       "startTranslationY":this.StartState.translateY,
                       "endTranslationX":this.EndState.translateX,
                       "endTranslationY":this.EndState.translateY,
-                      "traslationPoint": "horizontal",      
+                      "traslationPoint": "vertical",      
                     }
                     this.myArrows.push(newArrow)
+                  }else{
+                    if(this.getMyArea(this.EndState) === "East"){
+                      let newArrow : IArrow = {
+                      "startX":this.StartState.accessEastX,
+                        "startY":this.StartState.accessEastY ,
+                        "endX":this.EndState.accessWestX,
+                        "endY":this.EndState.accessWestY,
+                        "startTranslationX": this.StartState.translateX,
+                        "startTranslationY":this.StartState.translateY,
+                        "endTranslationX":this.EndState.translateX,
+                        "endTranslationY":this.EndState.translateY,
+                        "traslationPoint": "horizontal",      
+                      }
+                      this.myArrows.push(newArrow)
+                    }else{
+                      if(this.getMyArea(this.EndState) === "West"){
+                        let newArrow : IArrow = {
+                        "startX":this.StartState.accessWestX,
+                          "startY":this.StartState.accessWestY,
+                          "endX":this.EndState.accessEastX,
+                          "endY":this.EndState.accessEastY,
+                          "startTranslationX": this.StartState.translateX,
+                          "startTranslationY":this.StartState.translateY,
+                          "endTranslationX":this.EndState.translateX,
+                          "endTranslationY":this.EndState.translateY,
+                          "traslationPoint": "horizontal",      
+                        }
+                        this.myArrows.push(newArrow)
+                      }
+                    }
                   }
                 }
               }
             }
+            
           }
         }
-        
+        else{
+          this.changeName = false;
+          this.stateNewName = state;
+          if(!this.draggedDisplaySideTools){
+            this.displaySideTools = true;
+            this.fromState = true;
+          }
+          this.draggedDisplaySideTools = false;
+          this.fromState = false;
+        }
       }
-    }
-    else{
-      this.changeName = false;
-      this.stateNewName = state;
-      if(!this.draggedDisplaySideTools){
-        this.displaySideTools = true;
-        this.fromState = true;
-      }
-      this.draggedDisplaySideTools = false;
-            
-    }
+   },250)
+    
   }   
 
   hideSideTools(){
