@@ -14,7 +14,6 @@ export class ArrowComponent implements OnInit {
 path:string;
 
   ngOnInit(): void {
-    console.log(this.arrow);
     if(this.arrow.traslationPoint === "vertical"){
       this.path = (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
               + (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + ((this.arrow.startY + this.arrow.startTranslationY + this.arrow.endY + this.arrow.endTranslationY)/2).toString() + " "
@@ -30,7 +29,7 @@ path:string;
   }
  
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    
     if(this.arrow.traslationPoint === "vertical"){
       this.path = (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + (this.arrow.startY + this.arrow.startTranslationY).toString() + " "
               + (this.arrow.startX + this.arrow.startTranslationX).toString() + "," + ((this.arrow.startY + this.arrow.startTranslationY + this.arrow.endY + this.arrow.endTranslationY)/2).toString() + " "

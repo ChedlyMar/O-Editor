@@ -7,52 +7,28 @@ import { IArrow } from './arrow';
 })
 export class StateService {
 
-
-
   getStates(): IState[] {
     return [
       {
-        "name":"First Stat",
-        "type":"transition",
-        "positionX":250,
+        "name":"Start",
+        "type":"start",
+        "positionX":200,
         "positionY":170  ,
-        "width":100,
+        "width":110,
         "height":50,
-        "accessNorthX":300,
+        "accessNorthX":255,
         "accessNorthY":170,
-        "accessSouthX":300,
+        "accessSouthX":255,
         "accessSouthY":220,
-        "accessEastX":350,
+        "accessEastX":310,
         "accessEastY":195,
-        "accessWestX":250,
+        "accessWestX":200,
         "accessWestY":195,
-        "centerX":300,
+        "centerX":255,
         "centerY":195,
         "translateX":0,
-        "translateY":0
-        
+        "translateY":0        
       },
-      {
-        "name":"Second Stat",
-        "type":"freeFlow",
-        "positionX":25,
-        "positionY":340,
-        "width":100,
-        "height":50,
-        "accessNorthX":75,
-        "accessNorthY":340,
-        "accessSouthX":75,
-        "accessSouthY":390,
-        "accessEastX":125,
-        "accessEastY":365,
-        "accessWestX":25,
-        "accessWestY":365,
-        "centerX":75,
-        "centerY":365,
-        "translateX":0,
-        "translateY":0
-        
-      }
     ];
   }
 
@@ -63,26 +39,6 @@ export class StateService {
   }
 
  
-
-  getSingleStat(): IState {
-    let myStat :IState ={
-      "name":"First Stat",
-      "positionX":100,
-      "positionY":150,
-      "width":100,
-      "height":50,
-      "accessNorthX":50,
-      "accessNorthY":0,
-      "accessSouthX":50,
-      "accessSouthY":50,
-      "accessEastX":100,
-      "accessEastY":25,
-      "accessWestX":0,
-      "accessWestY":25      
-    }; 
-    return myStat; 
-       
-  }
 
   
 

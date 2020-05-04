@@ -26,7 +26,7 @@ export class ToolsComponent implements OnInit {
   type:string;
   create:boolean = false;
   notStart:boolean = true;
-
+  finalExist = false;
 
   constructor(private stateService:StateService) { }
 
@@ -43,22 +43,25 @@ export class ToolsComponent implements OnInit {
     document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
     document.getElementById("state").style.display = "block";    
     document.getElementById("stateName").innerText = "";
+
     if(type === "transition" || type==="transitionSideTools"){
       document.getElementById("stateName").style.backgroundColor = "#039be5";
     }else{
       if(type === "freeFlow" || type === "freeFlowSideTools"){
         document.getElementById("stateName").style.backgroundColor = "#fca91a";
       }else{
-        let finalExist = false;
+        
         this.stateService.getStates().forEach(state =>{
           if(state.type === "final"){
-            finalExist = true;
+            this.finalExist = true;         
           }
         });
-        if(!finalExist){
+        if(!this.finalExist){
           document.getElementById("stateName").style.backgroundColor = "#009035";
+          
         }else{
           document.getElementById("state").style.display = "none";
+          
         }
       }
     }    
@@ -79,7 +82,9 @@ export class ToolsComponent implements OnInit {
 
   createState(){
     if(this.create === true){
-      this.addNewArrowSideToolsEvent.emit(this.stateNewName);
+      if(this.type === "transitionSideTools" || this.type === "finalSideTools"){
+        this.addNewArrowSideToolsEvent.emit(this.stateNewName);
+      }
       this.stateParm.name = document.getElementById("state").innerText;
       this.stateParm.type = this.type;
       this.addNewStateEvent.emit(this.stateParm);        
@@ -101,6 +106,7 @@ export class ToolsComponent implements OnInit {
     this.addNewArrowEvent.emit(event);
       
   } 
+
   selectArrowSideTools(event:DragEvent){   
     this.addNewArrowSideToolsEvent.emit(this.stateNewName);
   }
@@ -140,9 +146,7 @@ export class ToolsComponent implements OnInit {
   
   
 
-  test(){
-    document.body.style.cursor =  "url('./assets/images/transitionCursor.svg'), auto";
-  }
+
   
   ngOnChanges(changes: SimpleChanges) {    
     if(this.changeName){
