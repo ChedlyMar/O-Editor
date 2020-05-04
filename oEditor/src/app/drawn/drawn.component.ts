@@ -99,6 +99,27 @@ export class DrawnComponent implements OnInit {
     }    
   }
 
+  onDeleteStateEventRecived(stateToDelete:IState){
+    this.myStates.forEach((state, index) => {
+      if(stateToDelete === state){
+        for(let i=this.myArrows.length-1;i>=0;i--){
+          let arrow = this.myArrows[i];
+            if((arrow.startX === stateToDelete.accessNorthX && arrow.startY === stateToDelete.accessNorthY) ||
+            (arrow.startX === stateToDelete.accessSouthX  && arrow.startY === stateToDelete.accessSouthY) ||
+            (arrow.startX === stateToDelete.accessEastX  && arrow.startY  === stateToDelete.accessEastY) ||
+            (arrow.startX === stateToDelete.accessWestX  && arrow.startY  === stateToDelete.accessWestY) || 
+            (arrow.endX === stateToDelete.accessNorthX && arrow.endY === stateToDelete.accessNorthY) ||
+            (arrow.endX === stateToDelete.accessSouthX  && arrow.endY === stateToDelete.accessSouthY) ||
+            (arrow.endX === stateToDelete.accessEastX  && arrow.endY  === stateToDelete.accessEastY) ||
+            (arrow.endX === stateToDelete.accessWestX  && arrow.endY  === stateToDelete.accessWestY)  ){
+              this.myArrows.splice(i,1);
+          }
+        }
+        this.myStates.splice(index,1);
+      }
+    })
+  }
+
   onMouseDown(state:IState){
     this.finalPosition = true;    
   }

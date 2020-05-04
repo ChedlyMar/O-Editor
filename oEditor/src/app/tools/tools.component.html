@@ -36,7 +36,7 @@
       title
     </span>
   </div>
-  <div class="sideTools">
+  <div class="sideTools" (click)="deleteState()" *ngIf="notStart">
     <mat-icon aria-hidden="false" aria-label="Example home icon">
       delete_forever
     </mat-icon>

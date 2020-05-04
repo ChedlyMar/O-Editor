@@ -15,6 +15,7 @@ export class ToolsComponent implements OnInit {
   @Output() addNewArrowEvent :EventEmitter<DragEvent> = new EventEmitter<DragEvent>(); 
   @Output() addNewArrowSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   @Output() changeNameSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>();
+  @Output() deleteStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   
   @Input() stateNewName:IState;
   @Input() displaySideTools:boolean ;
@@ -24,6 +25,7 @@ export class ToolsComponent implements OnInit {
   stateParm:IState = new IState;
   type:string;
   create:boolean = false;
+  notStart:boolean = true;
 
 
   constructor(private stateService:StateService) { }
@@ -131,6 +133,10 @@ export class ToolsComponent implements OnInit {
     } 
   }
 
+  deleteState(){
+    this.deleteStateEvent.emit(this.stateNewName);    
+    document.getElementById("sideTools").style.display = "none";
+  }
   
   
 
@@ -149,7 +155,12 @@ export class ToolsComponent implements OnInit {
         document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 115).toString() + "px";
         document.getElementById("sideTools").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
         document.getElementById("sideTools").style.display = "block";
-        this.test();
+        if(this.stateNewName.type === "start"){
+          this.notStart = false;
+        }else{
+          this.notStart = true;
+        }
+        
       }else{
         if(!this.displaySideTools){
           document.getElementById("sideTools").style.display = "none";
