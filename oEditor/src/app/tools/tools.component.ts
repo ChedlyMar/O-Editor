@@ -76,7 +76,7 @@ export class ToolsComponent implements OnInit {
  
   stopFollowCursor(event){
     this.myState = false;
-    this.stateParm.positionX = event.clientX;
+    this.stateParm.positionX = event.clientX - 148;
     this.stateParm.positionY = event.clientY - 70;
   }
 
@@ -144,7 +144,7 @@ export class ToolsComponent implements OnInit {
     document.getElementById("sideTools").style.display = "none";
   }
   
-  
+
 
 
   
@@ -156,7 +156,7 @@ export class ToolsComponent implements OnInit {
       
       
       if(this.displaySideTools ){
-        document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 115).toString() + "px";
+        document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 265).toString() + "px";
         document.getElementById("sideTools").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
         document.getElementById("sideTools").style.display = "block";
         if(this.stateNewName.type === "start"){

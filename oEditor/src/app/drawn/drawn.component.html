@@ -1,32 +1,36 @@
-<svg  style="border:1px solid black;"
-    (click)="hideSideTools()" >    
-    <g *ngFor="let state of myStates"
-        [state]="state"
-        [translation]="state.translateX"
-        
-        app-rectangle cdkDrag 
-        (cdkDragMoved)="onDragMoved($event,state)"
+<div class="container">
+    <div class="tools">
+        <app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
+                (addNewArrowEvent)="onNewArrowEventRecived($event)"
+                (addNewArrowSideToolsEvent)="onNewArrowSideToolsRecived($event)"
+                (changeNameSideToolsEvent)="onChangeNameSideToolsRecived($event)"
+                (deleteStateEvent)="onDeleteStateEventRecived($event)"
+                [stateNewName]="stateNewName"
+                [changeName]="changeName"
+                [displaySideTools]="displaySideTools"
+                >
+        </app-tools>
+    </div>
+    <div class="svg">
+        <svg  style="border:1px solid black;"
+            (click)="hideSideTools()" >    
+            <g *ngFor="let state of myStates"
+                [state]="state"
+                [translation]="state.translateX"
+                
+                app-rectangle cdkDrag 
+                (cdkDragMoved)="onDragMoved($event,state)"
 
-        (mousedown)="onMouseDown(state)"
-        (dblclick)="updateStateName(state)"
-        (click)="onStateSelected($event,state)"
-        >        
-    </g>  
-    <g *ngFor="let arrow of myArrows" 
-        [arrow]="arrow" app-arrow
-        [translation]="arrow.startTranslationX + arrow.startTranslationY + arrow.endTranslationX + arrow.endTranslationY">
-    </g>      
-</svg>
-
-<app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
-           (addNewArrowEvent)="onNewArrowEventRecived($event)"
-           (addNewArrowSideToolsEvent)="onNewArrowSideToolsRecived($event)"
-           (changeNameSideToolsEvent)="onChangeNameSideToolsRecived($event)"
-           (deleteStateEvent)="onDeleteStateEventRecived($event)"
-           [stateNewName]="stateNewName"
-           [changeName]="changeName"
-            [displaySideTools]="displaySideTools"
-
-           
-           >
-</app-tools>
+                (mousedown)="onMouseDown(state)"
+                (dblclick)="updateStateName(state)"
+                (click)="onStateSelected($event,state)"
+                >        
+            </g>  
+            <g *ngFor="let arrow of myArrows" 
+                [arrow]="arrow" app-arrow
+                [translation]="arrow.startTranslationX + arrow.startTranslationY + arrow.endTranslationX + arrow.endTranslationY">
+            </g>      
+        </svg>
+    </div>
+    
+</div>

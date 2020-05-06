@@ -1,6 +1,8 @@
 <div class="tools">
     <div class="panel" >
-      <div  id="transition" class="rect" (click)="createTransition($event,'transition')">
+      <div  id="transition" class="rect"  draggable="true" 
+      (click)="createTransition($event,'transition')"
+     >
         Add transition Status
       </div>
       <div id="freeFlow" class="rect" (click)="createTransition($event,'freeFlow')">
@@ -9,9 +11,11 @@
       <div id="final" class="rect" (click)="createTransition($event,'final')">
         Add Final Satatus
       </div>
+      <!--
       <div class="arrow" (click)="selectArrow($event)">
         Arrow
       </div>
+      -->
     </div>    
 </div>
 
