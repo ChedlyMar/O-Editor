@@ -7,4 +7,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AppComponent {
   title = 'O-Editor';  
+
+  
 }

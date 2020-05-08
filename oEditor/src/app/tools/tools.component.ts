@@ -46,9 +46,11 @@ export class ToolsComponent implements OnInit {
 
     if(type === "transition" || type==="transitionSideTools"){
       document.getElementById("stateName").style.backgroundColor = "#039be5";
+
     }else{
       if(type === "freeFlow" || type === "freeFlowSideTools"){
         document.getElementById("stateName").style.backgroundColor = "#fca91a";
+        //document.body.style.cursor = 'url(assets/images/blue.png) 60 25,auto';
       }else{
         
         this.stateService.getStates().forEach(state =>{
@@ -66,8 +68,9 @@ export class ToolsComponent implements OnInit {
       }
     }    
   }
-
+  
   followCursor(event:MouseEvent){    
+    
     if(this.myState){
       document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
       document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";        
@@ -118,7 +121,7 @@ export class ToolsComponent implements OnInit {
   changeStateName(state:IState){
     
     document.getElementById("state").style.display = "block"; 
-    document.getElementById("state").style.left = (state.positionX + state.translateX + 1).toString() + "px";
+    document.getElementById("state").style.left = (state.positionX + state.translateX + 153).toString() + "px";
     document.getElementById("state").style.top = (state.positionY + state.translateY + 71).toString() + "px";
     document.getElementById("stateName").innerText = this.stateNewName.name;
     document.getElementById("stateName").focus();
@@ -144,10 +147,27 @@ export class ToolsComponent implements OnInit {
     document.getElementById("sideTools").style.display = "none";
   }
   
+ 
+  startDragTransition(event:DragEvent, type:string){
+    if(type === "transition"){
+      document.body.style.cursor = 'url(assets/images/blue.png) 60 25,auto';
+    }
+    if(type === "freeFlow"){
+      document.body.style.cursor = 'url(assets/images/yellow.png) 60 25,auto';
+    }
+    if(type === "final"){
+      document.body.style.cursor = 'url(assets/images/green.png) 60 25,auto';
+    }
+  }
 
-
-
-  
+  close(){
+    if(document.body.style.cursor === 'url(assets/images/blue.png) 60 25,auto'){
+      console.log("hi");
+      
+    }
+    document.body.style.cursor = "default";
+  }
+ 
   ngOnChanges(changes: SimpleChanges) {    
     if(this.changeName){
       this.changeStateName(this.stateNewName);    

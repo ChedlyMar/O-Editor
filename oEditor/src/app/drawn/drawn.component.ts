@@ -3,6 +3,8 @@ import { IState } from '../shared/stat';
 import { StateService } from '../shared/stat.service';
 import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { IArrow } from '../shared/arrow';
+import { fromEvent, Subscription } from 'rxjs'; 
+import { ILine } from '../shared/line';
 
 @Component({
   selector: 'app-drawn',
@@ -17,6 +19,8 @@ export class DrawnComponent implements OnInit {
   EndState : IState;
 
   myArrows : IArrow[];
+
+  myLines: ILine[];
 
   stateNewName:IState;
 
@@ -37,12 +41,14 @@ export class DrawnComponent implements OnInit {
   preventSingleClick : boolean = false;
   draggedDisplaySideTools:boolean = false;
   finalPosition:boolean = true;
+  subscribtion: Subscription;
   
   constructor(private stateService:StateService) { }
 
   ngOnInit(): void {
     this.myStates = this.stateService.getStates();
     this.myArrows = this.stateService.getArrow();
+    this.myLines = this.stateService.getLine();
   }
   
   onNewStateEventRecived(stateParam:IState){   
@@ -96,6 +102,47 @@ export class DrawnComponent implements OnInit {
       this.StartState = state;
       this.startArrow = true;
       this.endArrow = false;
+      this.subscribtion = fromEvent(document.body, 'mousemove').subscribe((e: MouseEvent) => { 
+        let line: ILine = new ILine;        
+        this.setArea(state);
+        if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "North"){
+          line.startX = state.accessNorthX + state.translateX;
+          line.startY = state.accessNorthY + state.translateY;
+          line.endX = e.pageX - 150;
+          line.endY = e.pageY  - 70;
+        }else{
+          if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "South"){
+            line.startX = state.accessSouthX + state.translateX;
+            line.startY = state.accessSouthY + state.translateY;
+            line.endX = e.pageX - 150;
+            line.endY = e.pageY  - 70;
+          }else{
+            if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "East"){
+              line.startX = state.accessEastX + state.translateX;
+              line.startY = state.accessEastY + state.translateY;
+              line.endX = e.pageX - 150;
+              line.endY = e.pageY  - 70;
+            }
+            else{
+              line.startX = state.accessWestX + state.translateX;
+              line.startY = state.accessWestY + state.translateY;
+              line.endX = e.pageX - 150;
+              line.endY = e.pageY  - 70;
+            }
+          }
+        }
+        if(this.myLines.length){
+          this.myLines.splice(0,1);
+        }
+        this.myLines.push(line);
+        document.body.style.cursor = "not-allowed";
+        this.myStates.forEach(state =>{
+          if((e.pageX - 150) > (state.positionX + state.translateX) && (e.pageX - 150) < (state.positionX + 110 + state.translateX)
+            && (e.pageY - 70) > (state.positionY + state.translateY) && (e.pageY - 70) < (state.positionY + 50 + state.translateY)){
+              document.body.style.cursor = "default";
+          }
+        })
+      });
     }    
   }
 
@@ -512,8 +559,19 @@ export class DrawnComponent implements OnInit {
   hideSideTools(){
     if(!this.fromState){
       this.displaySideTools = false;
+      
     }
-    this.fromState = false;
+    setTimeout(()=>{
+      if(this.subscribtion){
+        this.subscribtion.unsubscribe();
+        this.myLines.splice(0,1);
+        this.drawArrow = false;
+        this.startArrow = false;
+        this.endArrow = true;
+      }
+      this.fromState = false;
+      document.body.style.cursor = "default";
+    },250)
   }
 
   setArea(state:IState){
@@ -527,23 +585,42 @@ export class DrawnComponent implements OnInit {
   getMyArea(stat:IState): string{ 
     if((this.a1 * (stat.centerX + stat.translateX) + this.b1) > (stat.centerY + stat.translateY)){
       if(this.a2 * (stat.centerX + stat.translateX) + this.b2 > (stat.centerY + stat.translateY)){
-        console.log("I am in the North Area");
         return "North";        
       }
       else{
-        console.log("I am in the East Area");
-        return "East"
+        return "East";
       }
     }
     else{
       if((this.a2 * (stat.centerX + stat.translateX) + this.b2) > (stat.centerY + stat.translateY)){
-        console.log("I am in the West Area");        
         return "West";
       }
       else{
-        console.log("I am in the South Area");
         return "South";
       }
     }
+  }
+
+  getMouseArea(x,y): string{ 
+    if((this.a1 * x + this.b1) > y){
+      if(this.a2 * x + this.b2 > y){
+        return "North";        
+      }
+      else{
+        return "East";
+      }
+    }
+    else{
+      if((this.a2 * x + this.b2) > y){
+        return "West";
+      }
+      else{
+        return "South";
+      }
+    }
+  }
+  setdefaultCursor(){
+    //document.body.style.cursor = "default";
+    //this.myLines.splice(0,1)
   }
 }

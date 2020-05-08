@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IState } from './stat';
 import { IArrow } from './arrow';
+import { ILine } from './line';
 
 @Injectable({
   providedIn: 'root'
@@ -35,10 +36,14 @@ export class StateService {
   getArrow(): IArrow[]{
     return[    
       
-    ];
+    ];    
   }
 
- 
+  getLine(): ILine[]{
+    return[    
+      
+    ];
+  }
 
   
 

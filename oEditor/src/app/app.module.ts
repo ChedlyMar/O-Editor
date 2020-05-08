@@ -16,6 +16,7 @@ import { ArrowComponent } from './shapes/arrow/arrow.component';
 import { RectangleComponent } from './shapes/rectangle/rectangle.component';
 import { FormComponent } from './form/form.component';
 import { MaterialModule } from './material/material.module';
+import { LineComponent } from './shapes/line/line.component';
 
 
 
@@ -27,7 +28,7 @@ import { MaterialModule } from './material/material.module';
     ToolsComponent,
     ArrowComponent,
     RectangleComponent,    
-    FormComponent,
+    FormComponent, LineComponent,
     
 
   ],

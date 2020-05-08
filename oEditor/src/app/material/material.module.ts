@@ -7,7 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 const materials = [
   MatFormFieldModule,
   MatInputModule,
-  MatIconModule
+  MatIconModule,
 ];
 
 @NgModule({

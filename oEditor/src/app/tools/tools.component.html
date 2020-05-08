@@ -1,14 +1,20 @@
 <div class="tools">
     <div class="panel" >
-      <div  id="transition" class="rect"  draggable="true" 
+      <div  id="transition" class="rect"   
       (click)="createTransition($event,'transition')"
+      (mousedown)="startDragTransition($event,'transition')"
+      (clickOutside)="close()"
      >
         Add transition Status
       </div>
-      <div id="freeFlow" class="rect" (click)="createTransition($event,'freeFlow')">
+      <div id="freeFlow" class="rect" 
+        (click)="createTransition($event,'freeFlow')"
+        (mousedown)="startDragTransition($event,'freeFlow')">
         Add Free Flow Status
       </div>
-      <div id="final" class="rect" (click)="createTransition($event,'final')">
+      <div id="final" class="rect" 
+        (click)="createTransition($event,'final')"
+        (mousedown)="startDragTransition($event,'final')">
         Add Final Satatus
       </div>
       <!--
