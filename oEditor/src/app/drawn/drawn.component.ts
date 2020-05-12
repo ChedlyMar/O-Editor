@@ -620,7 +620,7 @@ export class DrawnComponent implements OnInit {
     }
   }
   setdefaultCursor(){
-    //document.body.style.cursor = "default";
-    //this.myLines.splice(0,1)
+    document.body.style.cursor = "default";
+    this.myLines.splice(0,1)
   }
 }

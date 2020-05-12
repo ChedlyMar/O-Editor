@@ -1,19 +1,16 @@
 <div class="tools">
     <div class="panel" >
       <div  id="transition" class="rect"   
-      (click)="createTransition($event,'transition')"
       (mousedown)="startDragTransition($event,'transition')"
       (clickOutside)="close()"
      >
         Add transition Status
       </div>
       <div id="freeFlow" class="rect" 
-        (click)="createTransition($event,'freeFlow')"
         (mousedown)="startDragTransition($event,'freeFlow')">
         Add Free Flow Status
       </div>
       <div id="final" class="rect" 
-        (click)="createTransition($event,'final')"
         (mousedown)="startDragTransition($event,'final')">
         Add Final Satatus
       </div>
@@ -22,17 +19,26 @@
         Arrow
       </div>
       -->
+      <div  id="transition" class="rect"   
+      (mousedown)="mouseDown1($event,'transition')"
+      
+      (click)="click()"
+     >
+        Add transition Status
+      </div>
     </div>    
 </div>
 
-  <div id="state" class="state" 
+<div id="state" class="state" 
       (mousemove)="followCursor($event)"
-      (click)="stopFollowCursor($event)">
-
+      (click)="stopFollowCursor($event)"
+      (mouseup)="mouseUp($event)">
   <div id="stateName" class="textContent" (blur)="createState()"
         contenteditable="true" >
   </div>
 </div>
+
+
 
 <div id="sideTools" >
   <div class="sideTools" (click)="selectArrowSideTools($event)">

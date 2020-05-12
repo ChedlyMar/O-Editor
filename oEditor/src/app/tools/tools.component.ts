@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { IState } from '../shared/stat';
 import { StateService } from '../shared/stat.service';
+import { fromEvent, Subscription } from 'rxjs'; 
+import { RSA_X931_PADDING } from 'constants';
 
 
 @Component({
@@ -28,12 +30,16 @@ export class ToolsComponent implements OnInit {
   notStart:boolean = true;
   finalExist = false;
 
+  subscribtion: Subscription;
+
   constructor(private stateService:StateService) { }
 
   ngOnInit(): void {
 
   } 
 
+  /*
+//create transition with click
   createTransition(event:DragEvent, type:string){
 
     this.create = true;
@@ -68,17 +74,23 @@ export class ToolsComponent implements OnInit {
       }
     }    
   }
+  */
   
   followCursor(event:MouseEvent){    
     
     if(this.myState){
-      document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
-      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";        
+      this.subscribtion = fromEvent(document.body, 'mousemove').subscribe((e: MouseEvent) => { 
+        if(this.myState){
+          document.getElementById("state").style.left = (e.clientX - 55).toString() + "px";
+          document.getElementById("state").style.top = (e.clientY - 25).toString() + "px";        
+        }
+      });
     }
   }
  
   stopFollowCursor(event){
     this.myState = false;
+    this.subscribtion.unsubscribe()
     this.stateParm.positionX = event.clientX - 148;
     this.stateParm.positionY = event.clientY - 70;
   }
@@ -145,18 +157,38 @@ export class ToolsComponent implements OnInit {
   deleteState(){
     this.deleteStateEvent.emit(this.stateNewName);    
     document.getElementById("sideTools").style.display = "none";
-  }
-  
+  }  
  
   startDragTransition(event:DragEvent, type:string){
     if(type === "transition"){
-      document.body.style.cursor = 'url(assets/images/blue.png) 60 25,auto';
+      this.create = true;
+      this.myState = true;        
+      this.type = type;
+      document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
+      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
+      document.getElementById("state").style.display = "block";    
+      document.getElementById("stateName").innerText = "";
+      document.getElementById("stateName").style.backgroundColor = "#039be5";
     }
     if(type === "freeFlow"){
-      document.body.style.cursor = 'url(assets/images/yellow.png) 60 25,auto';
+      this.create = true;
+      this.myState = true;        
+      this.type = type;
+      document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
+      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
+      document.getElementById("state").style.display = "block";    
+      document.getElementById("stateName").innerText = "";
+      document.getElementById("stateName").style.backgroundColor = "#fca91a";
     }
     if(type === "final"){
-      document.body.style.cursor = 'url(assets/images/green.png) 60 25,auto';
+      this.create = true;
+      this.myState = true;        
+      this.type = type;
+      document.getElementById("state").style.left = (event.clientX - 50).toString() + "px";
+      document.getElementById("state").style.top = (event.clientY - 25).toString() + "px";
+      document.getElementById("state").style.display = "block";    
+      document.getElementById("stateName").innerText = "";
+      document.getElementById("stateName").style.backgroundColor = "#009035";
     }
   }
 
@@ -168,6 +200,39 @@ export class ToolsComponent implements OnInit {
     document.body.style.cursor = "default";
   }
  
+  mouseDown1(event:MouseEvent, type:string){
+    console.log(event);
+    this.create = true;
+    this.myState = true;        
+    this.type = type;
+    document.getElementById("teststate").style.left = (event.clientX - 50).toString() + "px";
+    document.getElementById("teststate").style.top = (event.clientY - 25).toString() + "px";
+    document.getElementById("teststate").style.display = "block";    
+    document.getElementById("teststateName").innerText = "";
+    document.getElementById("teststateName").style.backgroundColor = "#039be5";
+  }
+
+  mouseMove(event:MouseEvent){
+    this.subscribtion = fromEvent(document.body, 'mousemove').subscribe((e: MouseEvent) => { 
+      if(this.myState){
+        document.getElementById("teststate").style.left = (e.clientX - 55).toString() + "px";
+        document.getElementById("teststate").style.top = (e.clientY - 25).toString() + "px";        
+      }
+    });
+  }
+
+  mouseUp(event:MouseEvent){
+    console.log("mouse up");
+    this.myState = false;
+    this.subscribtion.unsubscribe();
+    document.getElementById("stateName").focus();
+    
+    this.stateParm.positionX = event.clientX - 148;
+    this.stateParm.positionY = event.clientY - 70;
+    
+  }
+
+  
   ngOnChanges(changes: SimpleChanges) {    
     if(this.changeName){
       this.changeStateName(this.stateNewName);    
