@@ -23,7 +23,9 @@
 <svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} 
             text-anchor="middle" 
             style="font-family: Arial, sans-serif; font-size: 14px; color: white; font-weight: bold; text-decoration: none; fill: rgb(255, 255, 255);">
-            {{state.name}}
+            <svg:tspan attr.x={{state.centerX}} attr.y={{state.centerY-10}} >{{tspan1}} </tspan>
+            <svg:tspan attr.x={{state.centerX}} attr.y={{state.centerY+5}} >{{tspan2}}</tspan>
+            <svg:tspan attr.x={{state.centerX}} attr.y={{state.centerY+20}} >{{tspan3}}</tspan>
 </svg:text>
 <svg:circle class="accessPoint"
             attr.cx={{state.accessNorthX}} attr.cy={{state.accessNorthY}} 

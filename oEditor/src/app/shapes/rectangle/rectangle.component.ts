@@ -15,6 +15,12 @@ export class RectangleComponent implements OnInit {
   final:boolean = false;
   start:boolean = false;
 
+  tspan1:string = "";
+  tspan2:string = "";
+  tspan3:string = "";
+  whiteSpacePosition:number[] = [];
+
+
   constructor() {
     
     
@@ -32,6 +38,28 @@ export class RectangleComponent implements OnInit {
           this.start = true;
         }
       }
+    }    
+    if(this.state.name.length <= 12){
+      this.tspan1 = this.state.name;
+    }else{
+      for(let i=0; i<this.state.name.length; i++){
+        if(this.state.name[i] === " " || i === (this.state.name.length-1)){
+          if(i <= 12){
+            this.tspan1 = this.state.name.slice(0,i);
+          }
+          else{
+            if((i - this.tspan1.length) <= 12){
+              this.tspan2 = this.state.name.slice(this.tspan1.length, i);
+            }else{
+              this.tspan3 = this.state.name.slice(this.tspan1.length + this.tspan2.length, i)
+            }
+          }
+        }
+      }      
+    }
+    if(this.tspan2 === ""){
+      this.tspan2 = this.tspan1;
+      this.tspan1 = ""
     }    
   }    
 }
