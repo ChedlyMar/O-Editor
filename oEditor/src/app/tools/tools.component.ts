@@ -2,7 +2,6 @@ import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@
 import { IState } from '../shared/stat';
 import { StateService } from '../shared/stat.service';
 import { fromEvent, Subscription } from 'rxjs'; 
-import { RSA_X931_PADDING } from 'constants';
 
 
 @Component({
@@ -38,8 +37,7 @@ export class ToolsComponent implements OnInit {
 
   } 
 
-  /*
-//create transition with click
+ 
   createTransition(event:DragEvent, type:string){
 
     this.create = true;
@@ -74,7 +72,6 @@ export class ToolsComponent implements OnInit {
       }
     }    
   }
-  */
   
   followCursor(event:MouseEvent){    
     
@@ -84,7 +81,15 @@ export class ToolsComponent implements OnInit {
           document.getElementById("state").style.left = (e.clientX - 55).toString() + "px";
           document.getElementById("state").style.top = (e.clientY - 25).toString() + "px";        
         }
-      });
+        if(e.clientX < 147 || e.clientY < 70){
+          document.body.style.cursor = "not-allowed"
+        }
+        else{
+          document.body.style.cursor = "default"
+        }
+      },
+      
+      );
     }
   }
  
@@ -222,13 +227,17 @@ export class ToolsComponent implements OnInit {
   }
 
   mouseUp(event:MouseEvent){
-    console.log("mouse up");
+    if(event.clientX > 148 && event.clientY > 70){
+      
+      document.getElementById("stateName").focus();    
+      this.stateParm.positionX = event.clientX - 148;
+      this.stateParm.positionY = event.clientY - 70;    
+    }
+    else{
+      document.getElementById("state").style.display = "none"; 
+    }
     this.myState = false;
     this.subscribtion.unsubscribe();
-    document.getElementById("stateName").focus();
-    
-    this.stateParm.positionX = event.clientX - 148;
-    this.stateParm.positionY = event.clientY - 70;
     
   }
 
