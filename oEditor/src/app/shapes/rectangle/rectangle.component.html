@@ -2,22 +2,22 @@
 <svg:rect   id="rect" class="rect" *ngIf="transition" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:#039be5;"  rx="15" ry="15" 
+            style="fill:#039be5;stroke-width:3;stroke:#0f77a8"  rx="15" ry="15" 
 />
 <svg:rect   id="rect" class="rect" *ngIf="freeFlow" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:#fca91a;" rx="15" ry="15" 
+            style="fill:#fca91a;;stroke-width:3;stroke:#b37711" rx="15" ry="15" 
 />
 <svg:rect   id="rect" class="rect" *ngIf="final" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:#009035;" rx="15" ry="15" 
+            style="fill:#009035;;stroke-width:3;stroke:#026125" rx="15" ry="15" 
 />
 <svg:rect   id="rect" class="rect" *ngIf="start" 
             attr.x={{state.positionX}} attr.y={{state.positionY}} 
             attr.width={{state.width}} attr.height={{state.height}}  
-            style="fill:rgb(44, 44, 44);"  rx="15" ry="15" 
+            style="fill:#2c2c2c;;stroke-width:3;stroke:#1d1d1d"  rx="15" ry="15" 
 />
        
 <svg:text   attr.x={{state.centerX}} attr.y={{state.centerY}} 

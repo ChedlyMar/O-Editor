@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { IState } from 'src/app/shared/stat';
 
 @Component({
@@ -18,7 +18,6 @@ export class RectangleComponent implements OnInit {
   tspan1:string = "";
   tspan2:string = "";
   tspan3:string = "";
-  whiteSpacePosition:number[] = [];
 
 
   constructor() {
@@ -62,4 +61,5 @@ export class RectangleComponent implements OnInit {
       this.tspan1 = ""
     }    
   }    
+  
 }
