@@ -120,6 +120,7 @@ export class ToolsComponent implements OnInit {
   updateStateName(state:IState){
     state.name = document.getElementById("stateName").innerText;
     document.getElementById("state").style.display="none";
+    this.updateStateNameEvent.emit(state.name);
   }
 
   selectArrow(event:DragEvent){
@@ -204,27 +205,6 @@ export class ToolsComponent implements OnInit {
     }
     document.body.style.cursor = "default";
   }
- 
-  mouseDown1(event:MouseEvent, type:string){
-    console.log(event);
-    this.create = true;
-    this.myState = true;        
-    this.type = type;
-    document.getElementById("teststate").style.left = (event.clientX - 50).toString() + "px";
-    document.getElementById("teststate").style.top = (event.clientY - 25).toString() + "px";
-    document.getElementById("teststate").style.display = "block";    
-    document.getElementById("teststateName").innerText = "";
-    document.getElementById("teststateName").style.backgroundColor = "#039be5";
-  }
-
-  mouseMove(event:MouseEvent){
-    this.subscribtion = fromEvent(document.body, 'mousemove').subscribe((e: MouseEvent) => { 
-      if(this.myState){
-        document.getElementById("teststate").style.left = (e.clientX - 55).toString() + "px";
-        document.getElementById("teststate").style.top = (e.clientY - 25).toString() + "px";        
-      }
-    });
-  }
 
   mouseUp(event:MouseEvent){
     if(event.clientX > 148 && event.clientY > 70){
@@ -247,8 +227,6 @@ export class ToolsComponent implements OnInit {
       this.changeStateName(this.stateNewName);    
       //this.changeName = false;
     }else{
-      
-      
       if(this.displaySideTools ){
         document.getElementById("sideTools").style.left = (this.stateNewName.positionX + this.stateNewName.translateX + 265).toString() + "px";
         document.getElementById("sideTools").style.top = (this.stateNewName.positionY + this.stateNewName.translateY + 70).toString() + "px";
@@ -258,7 +236,6 @@ export class ToolsComponent implements OnInit {
         }else{
           this.notStart = true;
         }
-        
       }else{
         if(!this.displaySideTools){
           document.getElementById("sideTools").style.display = "none";
