@@ -5,6 +5,7 @@ import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { IArrow } from '../shared/arrow';
 import { fromEvent, Subscription } from 'rxjs'; 
 import { ILine } from '../shared/line';
+import { TmplAstTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-drawn',
@@ -35,6 +36,7 @@ export class DrawnComponent implements OnInit {
 
   displaySideTools:boolean = false;
   changeName: boolean = false;
+  stateName: string = "";
   type:string="";
   fromState : boolean;
 
@@ -92,9 +94,7 @@ export class DrawnComponent implements OnInit {
     this.drawArrow = true;   
   }
 
-  onChangeNameSideToolsRecived(state: IState){
-    this.updateStateName(state);
-  }
+  
 
   onNewArrowSideToolsRecived(state:IState){
     if(state.type != "final"){
@@ -455,7 +455,7 @@ export class DrawnComponent implements OnInit {
       })
     }    
   }
-
+ 
   onStateSelected(event:CdkDragMove,state:IState){     
     this.preventSingleClick = false;
     setTimeout(()=>{
@@ -557,6 +557,16 @@ export class DrawnComponent implements OnInit {
     
   }   
 
+  onUpdateStateNameRecived(event:string){
+    this.myStates.forEach(state => {
+      if(state === this.stateNewName){
+        state.name = event;
+        this.stateName = event;
+      }
+      
+    });
+  }
+
   hideSideTools(){
     if(!this.fromState){
       this.displaySideTools = false;
@@ -620,6 +630,7 @@ export class DrawnComponent implements OnInit {
       }
     }
   }
+  
   setdefaultCursor(){
     document.body.style.cursor = "default";
     this.myLines.splice(0,1)

@@ -118,6 +118,7 @@ export class ToolsComponent implements OnInit {
   }
 
   updateStateName(state:IState){
+    
     state.name = document.getElementById("stateName").innerText;
     document.getElementById("state").style.display="none";
     this.updateStateNameEvent.emit(state.name);

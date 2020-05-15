@@ -3,8 +3,9 @@
         <app-tools (addNewStateEvent)="onNewStateEventRecived($event)"
                 (addNewArrowEvent)="onNewArrowEventRecived($event)"
                 (addNewArrowSideToolsEvent)="onNewArrowSideToolsRecived($event)"
-                (changeNameSideToolsEvent)="onChangeNameSideToolsRecived($event)"
+                (changeNameSideToolsEvent)="updateStateName($event)"
                 (deleteStateEvent)="onDeleteStateEventRecived($event)"
+                (updateStateNameEvent)="onUpdateStateNameRecived($event)"
                 [stateNewName]="stateNewName"
                 [changeName]="changeName"
                 [displaySideTools]="displaySideTools"
@@ -17,6 +18,7 @@
             <g *ngFor="let state of myStates"
                 [state]="state"
                 [translation]="state.translateX"
+                [stateName]="state.name"
                 
                 app-rectangle cdkDrag 
                 (cdkDragMoved)="onDragMoved($event,state)"

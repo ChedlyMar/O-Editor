@@ -10,6 +10,7 @@ export class RectangleComponent implements OnInit {
   
   @Input() state:IState;
   @Input() translation:number;
+  @Input() stateName:string;
   transition:boolean = false;
   freeFlow:boolean = false;
   final:boolean = false;
@@ -21,9 +22,8 @@ export class RectangleComponent implements OnInit {
 
 
   constructor() {
-    
-    
   }
+
   ngOnInit(): void {
     if(this.state.type==="transition"){
       this.transition = true;
@@ -38,17 +38,25 @@ export class RectangleComponent implements OnInit {
         }
       }
     }    
+    
+  }    
+  ngOnChanges(changes: SimpleChanges) {
     if(this.state.name.length <= 12){
       this.tspan1 = this.state.name;
+      this.tspan2 = "";
+      this.tspan3 = "";
     }else{
       for(let i=0; i<this.state.name.length; i++){
         if(this.state.name[i] === " " || i === (this.state.name.length-1)){
           if(i <= 12){
             this.tspan1 = this.state.name.slice(0,i);
+            this.tspan2 = "";
+            this.tspan3 = "";
           }
           else{
             if((i - this.tspan1.length) <= 12){
               this.tspan2 = this.state.name.slice(this.tspan1.length, i);
+              this.tspan3 = "";
             }else{
               this.tspan3 = this.state.name.slice(this.tspan1.length + this.tspan2.length, i)
             }
@@ -60,6 +68,5 @@ export class RectangleComponent implements OnInit {
       this.tspan2 = this.tspan1;
       this.tspan1 = ""
     }    
-  }    
-  
+  }
 }
