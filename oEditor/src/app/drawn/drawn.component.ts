@@ -5,7 +5,6 @@ import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { IArrow } from '../shared/arrow';
 import { fromEvent, Subscription } from 'rxjs'; 
 import { ILine } from '../shared/line';
-import { TmplAstTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-drawn',
@@ -472,6 +471,7 @@ export class DrawnComponent implements OnInit {
           }
           else{
             if(!this.endArrow && this.StartState != state){
+              this.subscribtion.unsubscribe();
               if(state.type != "start" && state.type != "freeFlow"){
                 this.EndState = state;
                 this.drawArrow= false;
@@ -633,6 +633,6 @@ export class DrawnComponent implements OnInit {
   
   setdefaultCursor(){
     document.body.style.cursor = "default";
-    this.myLines.splice(0,1)
+    this.myLines.splice(0,1);
   }
 }

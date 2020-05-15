@@ -54,7 +54,6 @@ export class ToolsComponent implements OnInit {
     }else{
       if(type === "freeFlow" || type === "freeFlowSideTools"){
         document.getElementById("stateName").style.backgroundColor = "#fca91a";
-        //document.body.style.cursor = 'url(assets/images/blue.png) 60 25,auto';
       }else{
         
         this.stateService.getStates().forEach(state =>{
@@ -80,22 +79,22 @@ export class ToolsComponent implements OnInit {
         if(this.myState){
           document.getElementById("state").style.left = (e.clientX - 55).toString() + "px";
           document.getElementById("state").style.top = (e.clientY - 25).toString() + "px";        
-        }
-        if(e.clientX < 147 || e.clientY < 70){
-          document.body.style.cursor = "not-allowed"
-        }
-        else{
-          document.body.style.cursor = "default"
-        }
-      },
-      
+          if(e.clientX < 147 || e.clientY < 70){
+            document.body.style.cursor = "not-allowed"
+          }
+          else{
+            document.body.style.cursor = "default"
+          }
+        }        
+      },      
       );
     }
   }
  
   stopFollowCursor(event){
     this.myState = false;
-    this.subscribtion.unsubscribe()
+    this.subscribtion.unsubscribe();
+    document.body.style.cursor = "default"
     this.stateParm.positionX = event.clientX - 148;
     this.stateParm.positionY = event.clientY - 70;
   }
@@ -200,10 +199,6 @@ export class ToolsComponent implements OnInit {
   }
 
   close(){
-    if(document.body.style.cursor === 'url(assets/images/blue.png) 60 25,auto'){
-      console.log("hi");
-      
-    }
     document.body.style.cursor = "default";
   }
 
@@ -219,6 +214,7 @@ export class ToolsComponent implements OnInit {
     }
     this.myState = false;
     this.subscribtion.unsubscribe();
+    document.body.style.cursor = "default"
     
   }
 
