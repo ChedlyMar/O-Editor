@@ -8,9 +8,11 @@ import { ILine } from './line';
 })
 export class StateService {
 
+
   getStates(): IState[] {
     return [
       {
+        "id":"StartEvent_1",
         "name":"Start",
         "type":"start",
         "positionX":200,
@@ -44,7 +46,6 @@ export class StateService {
       
     ];
   }
-
   
 
 }

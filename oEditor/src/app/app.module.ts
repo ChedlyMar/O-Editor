@@ -39,6 +39,7 @@ import { LineComponent } from './shapes/line/line.component';
     DragDropModule,
     ClickOutsideModule,
     MaterialModule,
+    
 
   ],
   providers: [],

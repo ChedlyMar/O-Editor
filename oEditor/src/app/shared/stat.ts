@@ -1,4 +1,5 @@
 export class IState {
+    id?:string;
     name?:string;
     type?:string;
     positionX?:number;

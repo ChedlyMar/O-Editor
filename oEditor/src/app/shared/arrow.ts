@@ -1,4 +1,5 @@
 export class IArrow{
+    id?:string;
     startX:number;
     startY:number
     endX:number;

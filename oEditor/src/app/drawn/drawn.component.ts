@@ -6,6 +6,7 @@ import { IArrow } from '../shared/arrow';
 import { fromEvent, Subscription } from 'rxjs'; 
 import { ILine } from '../shared/line';
 
+
 @Component({
   selector: 'app-drawn',
   templateUrl: './drawn.component.html',
@@ -62,6 +63,7 @@ export class DrawnComponent implements OnInit {
       stateParam.type = "final";
     }
     let newState:IState = {
+      "id":"Task_" + this.generateId(7),
       "name":stateParam.name,
       "type":stateParam.type,
       "positionX":stateParam.positionX - 55,
@@ -91,9 +93,7 @@ export class DrawnComponent implements OnInit {
   
   onNewArrowEventRecived(event){
     this.drawArrow = true;   
-  }
-
-  
+  }  
 
   onNewArrowSideToolsRecived(state:IState){
     if(state.type != "final"){
@@ -121,12 +121,13 @@ export class DrawnComponent implements OnInit {
               line.startY = state.accessEastY + state.translateY;
               line.endX = e.pageX - 150;
               line.endY = e.pageY  - 70;
-            }
-            else{
-              line.startX = state.accessWestX + state.translateX;
-              line.startY = state.accessWestY + state.translateY;
-              line.endX = e.pageX - 150;
-              line.endY = e.pageY  - 70;
+            }else{
+              if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "East"){
+                line.startX = state.accessWestX + state.translateX;
+                line.startY = state.accessWestY + state.translateY;
+                line.endX = e.pageX - 150;
+                line.endY = e.pageY  - 70;
+              }
             }
           }
         }
@@ -456,6 +457,8 @@ export class DrawnComponent implements OnInit {
   }
  
   onStateSelected(event:CdkDragMove,state:IState){     
+    console.log(state.name + " clicked");
+    
     this.preventSingleClick = false;
     setTimeout(()=>{
       if(!this.preventSingleClick){
@@ -480,7 +483,8 @@ export class DrawnComponent implements OnInit {
                 this.setArea(this.StartState);
                 if(this.getMyArea(this.EndState) === "North"){
                   let newArrow : IArrow = {
-                  "startX":this.StartState.accessNorthX,
+                    "id": "SequenceFlow_" + this.generateId(7),
+                    "startX":this.StartState.accessNorthX,
                     "startY":this.StartState.accessNorthY,
                     "endX":this.EndState.accessSouthX,
                     "endY":this.EndState.accessSouthY,
@@ -494,6 +498,7 @@ export class DrawnComponent implements OnInit {
                 }else{
                   if(this.getMyArea(this.EndState) === "South"){
                     let newArrow : IArrow = {
+                    "id": "SequenceFlow_" + this.generateId(7),
                     "startX":this.StartState.accessSouthX,
                       "startY":this.StartState.accessSouthY,
                       "endX":this.EndState.accessNorthX,
@@ -508,7 +513,8 @@ export class DrawnComponent implements OnInit {
                   }else{
                     if(this.getMyArea(this.EndState) === "East"){
                       let newArrow : IArrow = {
-                      "startX":this.StartState.accessEastX,
+                        "id": "SequenceFlow_" + this.generateId(7),
+                        "startX":this.StartState.accessEastX,
                         "startY":this.StartState.accessEastY ,
                         "endX":this.EndState.accessWestX,
                         "endY":this.EndState.accessWestY,
@@ -522,7 +528,8 @@ export class DrawnComponent implements OnInit {
                     }else{
                       if(this.getMyArea(this.EndState) === "West"){
                         let newArrow : IArrow = {
-                        "startX":this.StartState.accessWestX,
+                          "id": "SequenceFlow_" + this.generateId(7),
+                          "startX":this.StartState.accessWestX,
                           "startY":this.StartState.accessWestY,
                           "endX":this.EndState.accessEastX,
                           "endY":this.EndState.accessEastY,
@@ -553,7 +560,7 @@ export class DrawnComponent implements OnInit {
           this.fromState = false;
         }
       }
-   },250)
+   },200)
     
   }   
 
@@ -635,4 +642,123 @@ export class DrawnComponent implements OnInit {
     document.body.style.cursor = "default";
     this.myLines.splice(0,1);
   }
+
+
+
+  createXML(){
+    //read xlm file
+    var xmlDoc;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "assets/file/bpmn.xml");    
+    var a ="";
+    
+    
+    xhttp.onload = () => {
+      //convert  to xml
+      let parser = new DOMParser();
+      xmlDoc = parser.parseFromString(xhttp.response,"text/xml");  
+      var x = xmlDoc.getElementsByTagName("bpmn:process")[0];
+
+      
+     let newTask;
+      // dynamicly create element
+      this.myStates.forEach(stat => {
+        if(stat.type === "transition" || stat.type === "freeFlow"){
+          // create element
+          newTask = xmlDoc.createElement("bpmn:task");
+        }
+        if(stat.type === "start"){
+          // create element          
+          newTask = xmlDoc.createElement("bpmn:startEvent");
+        }
+        if(stat.type === "final"){
+          // create element
+          newTask = xmlDoc.createElement("bpmn:endEvent");
+        }       
+          //create state id, name + value
+          let idAttribute = xmlDoc.createAttribute("id");
+          idAttribute.nodeValue = stat.id;
+          newTask.setAttributeNode(idAttribute);
+
+          let nameAttribute = xmlDoc.createAttribute("name");
+          nameAttribute.nodeValue = stat.name;
+          newTask.setAttributeNode(nameAttribute);
+
+          this.myArrows.forEach(arrow =>{
+            if((arrow.startX === stat.accessNorthX && arrow.startY === stat.accessNorthY) || 
+            (arrow.startX === stat.accessSouthX && arrow.startY === stat.accessSouthY) ||
+            (arrow.startX === stat.accessEastX && arrow.startY === stat.accessEastY)||
+            (arrow.startX === stat.accessWestX && arrow.startY === stat.accessWestY)){              
+              // create arrow child elemnet
+              let outGoingArrow = xmlDoc.createElement("bpmn:outgoing");
+              newTask.appendChild(outGoingArrow);
+              let idArrow = xmlDoc.createTextNode(arrow.id);
+              outGoingArrow.appendChild(idArrow);
+
+              this.myStates.forEach(endStat => {
+                if((arrow.endX === endStat.accessNorthX && arrow.endY === endStat.accessNorthY) || 
+                  (arrow.endX === endStat.accessSouthX && arrow.endY === endStat.accessSouthY) ||
+                  (arrow.endX === endStat.accessEastX && arrow.endY === endStat.accessEastY)||
+                  (arrow.endX === endStat.accessWestX && arrow.endY === endStat.accessWestY)){
+                    // create newsequenceFlow                    
+                    let newsequenceFlow = xmlDoc.createElement("bpmn:sequenceFlow");
+                    //create attribute + value
+                    let id = xmlDoc.createAttribute("id");
+                    id.nodeValue = arrow.id;
+                    newsequenceFlow.setAttributeNode(id)
+
+                    let newsourceRef = xmlDoc.createAttribute("sourceRef");
+                    newsourceRef.nodeValue = stat.name;
+                    newsequenceFlow.setAttributeNode(newsourceRef);
+                    
+                    let newtargetRef = xmlDoc.createAttribute("targetRef");
+                    newtargetRef.nodeValue = endStat.name;
+                    newsequenceFlow.setAttributeNode(newtargetRef);
+                    
+                    x.appendChild(newsequenceFlow)
+                  }
+              })
+            }
+            
+            if((arrow.endX === stat.accessNorthX && arrow.endY === stat.accessNorthY) || 
+            (arrow.endX === stat.accessSouthX && arrow.endY === stat.accessSouthY) ||
+            (arrow.endX === stat.accessEastX && arrow.endY === stat.accessEastY)||
+            (arrow.endX === stat.accessWestX && arrow.endY === stat.accessWestY)){
+              // create child elemnet
+              let inCommingArrow = xmlDoc.createElement("bpmn:incoming");
+              newTask.appendChild(inCommingArrow);
+              let idArrow = xmlDoc.createTextNode(arrow.id);
+              inCommingArrow.appendChild(idArrow);
+            }
+          })
+          
+          x.appendChild(newTask);
+        }      
+      )     
+      console.log(x);  
+      
+    a = x;  
+    };
+    xhttp.send(a);
+    let c=xmlDoc.documentElement;
+
+    c.insert(a,c);
+    
+    
+ }
+
+
+
+
+ generateId(length) {
+  var result           = '';
+  var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+
 }

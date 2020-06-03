@@ -17,6 +17,7 @@ export class ToolsComponent implements OnInit {
   @Output() addNewArrowSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   @Output() changeNameSideToolsEvent :EventEmitter<IState> = new EventEmitter<IState>();
   @Output() deleteStateEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
+  @Output() startArrowEvent :EventEmitter<IState> = new EventEmitter<IState>(); 
   
   @Input() stateNewName:IState;
   @Input() displaySideTools:boolean ;
@@ -65,8 +66,7 @@ export class ToolsComponent implements OnInit {
           document.getElementById("stateName").style.backgroundColor = "#009035";
           
         }else{
-          document.getElementById("state").style.display = "none";
-          
+          document.getElementById("state").style.display = "none";          
         }
       }
     }    
@@ -100,7 +100,7 @@ export class ToolsComponent implements OnInit {
   }
 
   createState(){
-    if(this.create === true){
+    if(this.create === true){      
       if(this.type === "transitionSideTools" || this.type === "finalSideTools"){
         this.addNewArrowSideToolsEvent.emit(this.stateNewName);
       }
@@ -203,8 +203,7 @@ export class ToolsComponent implements OnInit {
   }
 
   mouseUp(event:MouseEvent){
-    if(event.clientX > 148 && event.clientY > 70){
-      
+    if(event.clientX > 148 && event.clientY > 70){      
       document.getElementById("stateName").focus();    
       this.stateParm.positionX = event.clientX - 148;
       this.stateParm.positionY = event.clientY - 70;    
@@ -214,9 +213,16 @@ export class ToolsComponent implements OnInit {
     }
     this.myState = false;
     this.subscribtion.unsubscribe();
-    document.body.style.cursor = "default"
+    document.body.style.cursor = "default"    
+  }
+
+  startArrow($event){
+   
     
   }
+
+
+
 
   
   ngOnChanges(changes: SimpleChanges) {    
