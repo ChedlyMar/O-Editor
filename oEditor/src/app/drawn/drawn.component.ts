@@ -7,6 +7,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { ILine } from '../shared/line';
 
 
+
 @Component({
   selector: 'app-drawn',
   templateUrl: './drawn.component.html',
@@ -104,28 +105,28 @@ export class DrawnComponent implements OnInit {
       this.subscribtion = fromEvent(document.body, 'mousemove').subscribe((e: MouseEvent) => { 
         let line: ILine = new ILine;        
         this.setArea(state);
-        if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "North"){
+        if(this.getMouseArea((e.pageX - 200),(e.pageY  - 70))=== "North"){
           line.startX = state.accessNorthX + state.translateX;
           line.startY = state.accessNorthY + state.translateY;
-          line.endX = e.pageX - 150;
+          line.endX = e.pageX - 200;
           line.endY = e.pageY  - 70;
         }else{
-          if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "South"){
+          if(this.getMouseArea((e.pageX - 200),(e.pageY  - 70))=== "South"){
             line.startX = state.accessSouthX + state.translateX;
             line.startY = state.accessSouthY + state.translateY;
-            line.endX = e.pageX - 150;
+            line.endX = e.pageX - 200;
             line.endY = e.pageY  - 70;
           }else{
-            if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "East"){
+            if(this.getMouseArea((e.pageX - 200),(e.pageY  - 70))=== "East"){
               line.startX = state.accessEastX + state.translateX;
               line.startY = state.accessEastY + state.translateY;
-              line.endX = e.pageX - 150;
+              line.endX = e.pageX - 200;
               line.endY = e.pageY  - 70;
             }else{
-              if(this.getMouseArea((e.pageX - 150),(e.pageY  - 70))=== "East"){
+              if(this.getMouseArea((e.pageX - 200),(e.pageY  - 70))=== "West"){
                 line.startX = state.accessWestX + state.translateX;
                 line.startY = state.accessWestY + state.translateY;
-                line.endX = e.pageX - 150;
+                line.endX = e.pageX - 200;
                 line.endY = e.pageY  - 70;
               }
             }
@@ -643,24 +644,17 @@ export class DrawnComponent implements OnInit {
     this.myLines.splice(0,1);
   }
 
-
-
   createXML(){
     //read xlm file
     var xmlDoc;
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "assets/file/bpmn.xml");    
-    var a ="";
-    
-    
+    xhttp.open("GET", "assets/file/bpmn.xml");
     xhttp.onload = () => {
       //convert  to xml
       let parser = new DOMParser();
       xmlDoc = parser.parseFromString(xhttp.response,"text/xml");  
       var x = xmlDoc.getElementsByTagName("bpmn:process")[0];
-
-      
-     let newTask;
+      let newTask;
       // dynamicly create element
       this.myStates.forEach(stat => {
         if(stat.type === "transition" || stat.type === "freeFlow"){
@@ -731,24 +725,13 @@ export class DrawnComponent implements OnInit {
               inCommingArrow.appendChild(idArrow);
             }
           })
-          
           x.appendChild(newTask);
         }      
       )     
       console.log(x);  
-      
-    a = x;  
     };
-    xhttp.send(a);
-    let c=xmlDoc.documentElement;
-
-    c.insert(a,c);
-    
-    
+    xhttp.send();
  }
-
-
-
 
  generateId(length) {
   var result           = '';
