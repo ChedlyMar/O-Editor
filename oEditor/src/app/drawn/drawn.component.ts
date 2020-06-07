@@ -138,7 +138,7 @@ export class DrawnComponent implements OnInit {
         this.myLines.push(line);
         document.body.style.cursor = "not-allowed";
         this.myStates.forEach(state =>{
-          if((e.pageX - 150) > (state.positionX + state.translateX) && (e.pageX - 150) < (state.positionX + 110 + state.translateX)
+          if((e.pageX - 200) > (state.positionX + state.translateX) && (e.pageX - 200) < (state.positionX + 110 + state.translateX)
             && (e.pageY - 70) > (state.positionY + state.translateY) && (e.pageY - 70) < (state.positionY + 50 + state.translateY)
             && state.type != "start" && state.type != "freeFlow"){
               document.body.style.cursor = "default";
@@ -457,9 +457,7 @@ export class DrawnComponent implements OnInit {
     }    
   }
  
-  onStateSelected(event:CdkDragMove,state:IState){     
-    console.log(state.name + " clicked");
-    
+  onStateSelected(event:CdkDragMove,state:IState){         
     this.preventSingleClick = false;
     setTimeout(()=>{
       if(!this.preventSingleClick){
@@ -546,8 +544,7 @@ export class DrawnComponent implements OnInit {
                   }
                 }
               }
-            }
-            
+            }            
           }
         }
         else{

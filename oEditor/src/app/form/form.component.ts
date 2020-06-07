@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Parser } from '@angular/compiler/src/ml_parser/parser';
 import { StateService } from '../shared/stat.service';
 
 @Component({
@@ -15,7 +14,7 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
   }
   createXML(){
-
+    
   }
 
 

@@ -4,31 +4,31 @@
     //position: absolute;
     //left: 0px;
     //top: 120px;
-    width: 150px;
+    width:200px; 
     height: auto;
-    border: solid 1px;
+    //border: solid 1px;
+    background-color: #FAFAFA;
 }
 
 .panel{
     width: 100%;
+    height: auto;
     justify-content: center;
+    //min-width: 200px;
+    background-color: #eef0f2;
+    font-family: "Times New Roman";
+    
 }
 
 .rect, .arrow{
     width:100%; 
-    height:50px;
+    height:auto;
     fill:none;
     border: solid 1px;
-    margin: 3px;
+    //margin: 3px;
     color: whitesmoke;
-    //cursor: url(src/assets/images/blue.png),auto;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+    cursor: pointer;
+    
     
 }
 
@@ -65,6 +65,7 @@
 
 #transition{
     background-color: #039be5;
+    
 }
 #sideTransition{
     color: #039be5;
@@ -101,4 +102,47 @@
     height: 100px;
     width: 100px;
     background-color: #009035;
+}
+
+.entryDescription{
+    
+   
+    font-size:12px;
+    user-select: none;
+    color: #333;
+    text-rendering: optimizeLegibility;
+    box-sizing: border-box;
+    text-align: left;
+    margin:10px 0px 0px 10px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.transitionHeader{
+    font-size: 13px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 10px 0px 0px 25px;
+    width: 75%;
+    white-space: nowrap;
+    //overflow: hidden;
+    text-overflow: ellipsis ;
+}
+.rect:hover .entryDescription{
+        color: #ff7400;
+    
+}
+
+.separator{
+    margin: 3px 5px 0px;
+    border: none;
+    border-top: solid 1px #DDD;
+    clear: both;
+}
+span{
+    display: inline-block;
+    vertical-align: top;
+}
+mat-icon{
+    font-size: 20px;
 }

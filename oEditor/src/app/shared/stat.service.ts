@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { IState } from './stat';
 import { IArrow } from './arrow';
 import { ILine } from './line';
+import { HttpClient, HttpHeaders, HttpHeaderResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
 
+  constructor(private http: HttpClient){}
 
   getStates(): IState[] {
     return [
@@ -45,6 +47,9 @@ export class StateService {
     return[    
       
     ];
+  }
+
+  getProcess(){
   }
   
 

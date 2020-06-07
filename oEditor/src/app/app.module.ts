@@ -17,6 +17,7 @@ import { RectangleComponent } from './shapes/rectangle/rectangle.component';
 import { FormComponent } from './form/form.component';
 import { MaterialModule } from './material/material.module';
 import { LineComponent } from './shapes/line/line.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -39,6 +40,7 @@ import { LineComponent } from './shapes/line/line.component';
     DragDropModule,
     ClickOutsideModule,
     MaterialModule,
+    HttpClientModule
     
 
   ],

@@ -1,20 +1,44 @@
 <div class="tools">
     <div class="panel" >
-      <div  id="transition" class="rect"   
-      (mousedown)="startDragTransition($event,'transition')"
-      (clickOutside)="close()"
-     >
-        Add transition Status
+      <div class="rect"   
+        (mousedown)="startDragTransition($event,'transition')"
+        (clickOutside)="close()">
+        <div id="transition" class="transitionHeader">
+          <mat-icon class="menuIcon">add_circle </mat-icon>
+          <span>Add transition Status</span>
+        </div>
+        <div class="entryDescription">
+          <strong>Transition Status:</strong>
+           Commonly used as steps in the life of a task. 
+           Entering or Exiting this status will be dedicated by the arrows in the flow.
+        </div>    
+        <hr class="separator">    
       </div>
-      <div id="freeFlow" class="rect" 
-        
+      <div class="rect"         
         (mousedown)="startDragTransition($event,'freeFlow')">
-        Add Free Flow Status
+        <div id="freeFlow" class="transitionHeader">
+          <mat-icon class="menuIcon">add_circle </mat-icon>
+          <span>Add Free Flow Status</span>
+        </div> 
+        <div class="entryDescription">
+          <strong>Free Flow Status:</strong> 
+          Commonly used as steps in the life of a task. 
+          Task entering this status will be free from any other statuses. 
+          Exiting this status will be dedicated by the arrows in the flow.
+        </div>
+        <hr class="separator">
       </div>
-      <div id="final" class="rect" 
-      
+      <div  class="rect"       
         (mousedown)="startDragTransition($event,'final')">
-        Add Final Satatus
+        <div id="final" class="transitionHeader">
+          <mat-icon class="menuIcon">add_circle </mat-icon>
+          <span>Add Final Satatus</span>
+        </div> 
+        <div class="entryDescription">
+          <strong>Final Status:</strong> 
+          Commonly used as final resting place for a task.
+        </div>
+        <hr class="separator">
       </div>      
     </div>    
 </div>
